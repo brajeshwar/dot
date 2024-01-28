@@ -1,4 +1,4 @@
-# [.] dot
+# .
 
 ## Symlink
 
@@ -9,6 +9,7 @@ ln -s /Downloads ~/User/Downloads
 ```
 
 // overwrite/force
+
 `ln -sf [source] [link]`
 
 ## Stow
@@ -25,4 +26,4 @@ GNU [Stow](https://www.gnu.org/software/stow/) is a symlink farm manager which t
 #### References
 
 - [Awesome Dotfiles](https://project-awesome.org/webpro/awesome-dotfiles)
-- Unofficial guide to [dotfiles on GitHub](https://dotfiles.github.io)
+- [dotfiles on GitHub](https://dotfiles.github.io), the Unofficial Guide

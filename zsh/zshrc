@@ -1,0 +1,18 @@
+# clean, simple, minimal
+PROMPT='%{%F{red}%}%~ %{%F{yellow}%}% › %{%F{reset_color}%}%'
+
+path=('/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin' $path)
+export PATH
+
+# GPG
+export GPG_TTY=$(tty)
+
+# rbenv
+eval "$(rbenv init - zsh)"
+
+# link Rubies to Homebrew's OpenSSL
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # loads nvm

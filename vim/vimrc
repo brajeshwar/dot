@@ -1,0 +1,123 @@
+" --------------------------------------
+" Brajeshwar, https://brajeshwar.com
+" Start: 2024
+" Edited: Jan 13, 2024
+" --------------------------------------
+
+set nocompatible		" Disable compatibility with vi which can cause unexpected issues
+set encoding=utf8       " Set utf8 as standard encoding and en_US as the standard language
+set ffs=unix,dos,mac    " Use Unix as the standard file type
+
+filetype on			    " Enable type file detection
+filetype plugin on		" Enable plugins and load plugin for the detected file type
+filetype indent on		" Load an indent file for the detected file type
+
+set wildmenu			" Turn on the Wild menu
+
+syntax on			    " Turn syntax highlighting on
+set number			    " Add numbers to each line on the left-hand side
+set cursorline			" Highlight cursor line underneath the cursor horizontally
+" set cursorcolumn		" Highlight cursor line underneath the cursor vertically
+set autoindent          " auto indenting
+
+set cursorline          " highlight current line
+
+set shiftwidth=4		" Set shift width to 4 spaces
+set tabstop=4			" Set tab width to 4 columns
+set expandtab			" Use space characters instead of tabs
+set foldcolumn=1		" Add a bit extra margin to the left
+set smarttab
+
+" backup off
+set nobackup			
+set nowb
+set noswapfile
+
+set history=99			" Set the commands to save in history default number is 20.
+set backspace=2         " backspace in insert mode works like normal editor
+set ruler			    " Always show current position
+set cmdheight=1			" Height of the command bar
+set ignorecase			" Ignore case when searching
+set smartcase			" When searching try to be smart about cases
+set hlsearch			" Highlight search results
+set incsearch			" Makes search act like search in modern browsers
+set lazyredraw			" Don't redraw while executing macros (good performance config)
+set magic			    " For regular expressions turn magic on
+set showmatch			" Show matching brackets when text indicator is over them
+set mat=2			    " How many tenths of a second to blink when matching brackets
+syntax enable           " Enable syntax highlighting
+
+" --------------------------------------
+" Plugins
+" --------------------------------------
+
+" Plugins
+call plug#begin()
+  Plug 'preservim/nerdtree'
+  Plug 'arcticicestudio/nord-vim'
+call plug#end()
+
+" Plugin Settings
+autocmd VimEnter * NERDTree     " Start NERDTree and leave the cursor in it
+
+" Set to auto read when a file is changed from the outside
+set autoread
+au FocusGained,BufEnter * silent! checktime
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+    set wildignore+=.git\*,.hg\*,.svn\*
+else
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+endif
+
+" Return to last edit position when opening files (You want this!)
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Always show the status line
+set laststatus=2
+
+" Format the status line
+" set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+
+" --------------------------------------
+" User Interface / GUI
+" --------------------------------------
+set background=dark
+colorscheme nord
+set tabpagemax=9        " max tabs to show
+set showmode            " display the current mode
+
+" Set font according to system
+if has("mac") || has("macunix")
+    set gfn=Monaco:h15
+elseif has("win16") || has("win32")
+    set gfn=Monaco:h15
+elseif has("gui_gtk2")
+    set gfn=Monaco:h15
+elseif has("linux")
+    set gfn=Monaco:h15
+elseif has("unix")
+    set gfn=Monospace\ 11
+endif
+
+" Disable scrollbars (real hackers don't use scrollbars for navigation!)
+set guioptions-=r
+set guioptions-=R
+set guioptions-=l
+set guioptions-=L
+
+" --------------------------------------
+" Editing
+" --------------------------------------
+
+""""""""""""""""""""
+" => Turn persistent undo on 
+"    means that you can undo even when you close a buffer/VIM
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+try
+    set undodir=~/.vim_runtime/temp_dirs/undodir
+    set undofile
+catch
+endtry

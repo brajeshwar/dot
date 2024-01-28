@@ -1,0 +1,5 @@
+eval "$(rbenv init -)"
+export GPG_TTY=$(tty)
+
+# load default .profile
+[[ -s "$HOME/.profile" ]] && source "$HOME/.profile"
