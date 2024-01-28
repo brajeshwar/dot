@@ -26,7 +26,7 @@
     helper = osxkeychain
 
 [core]
-    editor = "zed"
+    editor = "vim"
 	excludesfile = ~/.gitignore_global
 
 [grep]
