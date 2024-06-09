@@ -50,6 +50,7 @@ brew install gs
 brew install imagemagick --with-webp
 brew install ssh-copy-id
 brew install tree
+brew install eloston-chromium
 
 # Remove outdated versions from the cellar.
 brew cleanup
