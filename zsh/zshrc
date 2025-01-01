@@ -19,3 +19,9 @@ export NVM_DIR="$HOME/.nvm"
 
 # opam configuration
 [[ ! -r /Users/brajeshwar/.opam/opam-init/init.zsh ]] || source /Users/brajeshwar/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
+# Rust / Cargo
+. "$HOME/.cargo/env"
+
+# Docker
+alias docker="/Applications/Docker.app/Contents/Resources/bin/docker"
