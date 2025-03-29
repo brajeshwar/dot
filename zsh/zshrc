@@ -1,7 +1,9 @@
 # clean, simple, minimal
 PROMPT='%{%F{red}%}%~ %{%F{yellow}%}% › %{%F{reset_color}%}%'
 
-path=('/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin' $path)
+#
+export PATH="/Users/brajeshwar/.bun/bin:$PATH"
+path=('/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:~/.bun/bin:' $path)
 export PATH
 
 # GPG
@@ -18,10 +20,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # loads nvm
 
 # opam configuration
-[[ ! -r /Users/brajeshwar/.opam/opam-init/init.zsh ]] || source /Users/brajeshwar/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+# [[ ! -r /Users/brajeshwar/.opam/opam-init/init.zsh ]] || source /Users/brajeshwar/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
 # Rust / Cargo
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"
 
 # Docker
 alias docker="/Applications/Docker.app/Contents/Resources/bin/docker"
