@@ -1,0 +1,10 @@
+# Available Themes
+# $ ghostty +list-themes
+theme = Nord
+
+window-width = 120
+window-height = 42
+
+font-family = Monaco
+font-size = 16
+keybind = shift+enter=text:\x1b\r

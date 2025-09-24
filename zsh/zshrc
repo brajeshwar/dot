@@ -8,6 +8,7 @@ export PATH
 
 # GPG
 export GPG_TTY=$(tty)
+gpgconf --launch gpg-agent
 
 # rbenv
 eval "$(rbenv init - zsh)"
@@ -27,3 +28,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # Docker
 alias docker="/Applications/Docker.app/Contents/Resources/bin/docker"
+# Added by Windsurf
+export PATH="/Users/brajeshwar/.codeium/windsurf/bin:$PATH"
+
+. "$HOME/.local/bin/env"

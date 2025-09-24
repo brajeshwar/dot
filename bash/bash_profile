@@ -4,3 +4,5 @@ export GPG_TTY=$(tty)
 # load default .profile
 [[ -s "$HOME/.profile" ]] && source "$HOME/.profile"
 . "$HOME/.cargo/env"
+
+. "$HOME/.local/bin/env"
