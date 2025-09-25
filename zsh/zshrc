@@ -1,7 +1,6 @@
 # clean, simple, minimal
 PROMPT='%{%F{red}%}%~ %{%F{yellow}%}% › %{%F{reset_color}%}%'
 
-#
 export PATH="/Users/brajeshwar/.bun/bin:$PATH"
 path=('/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:~/.bun/bin:' $path)
 export PATH
@@ -13,22 +12,8 @@ gpgconf --launch gpg-agent
 # rbenv
 eval "$(rbenv init - zsh)"
 
-# link Rubies to Homebrew's OpenSSL
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
-
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # loads nvm
-
-# opam configuration
-# [[ ! -r /Users/brajeshwar/.opam/opam-init/init.zsh ]] || source /Users/brajeshwar/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
-
-# Rust / Cargo
-# . "$HOME/.cargo/env"
-
-# Docker
-alias docker="/Applications/Docker.app/Contents/Resources/bin/docker"
-# Added by Windsurf
-export PATH="/Users/brajeshwar/.codeium/windsurf/bin:$PATH"
 
 . "$HOME/.local/bin/env"

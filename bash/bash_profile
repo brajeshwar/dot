@@ -1,8 +1,13 @@
-eval "$(rbenv init -)"
+# Intel Homebrew usually lives in /usr/local; Apple Silicon in /opt/homebrew.
+# Both commands below auto-detect the prefix via brew.
+export OPENSSL_PREFIX="$(brew --prefix openssl@3)"
+export PKG_CONFIG_PATH="$OPENSSL_PREFIX/lib/pkgconfig"
+export CPPFLAGS="-I$OPENSSL_PREFIX/include"
+export LDFLAGS="-L$OPENSSL_PREFIX/lib"
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$OPENSSL_PREFIX"
+
+eval "$(rbenv init - bash)"
 export GPG_TTY=$(tty)
 
 # load default .profile
 [[ -s "$HOME/.profile" ]] && source "$HOME/.profile"
-. "$HOME/.cargo/env"
-
-. "$HOME/.local/bin/env"

@@ -63,7 +63,7 @@ defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
 # Save to disk (not to iCloud) by default
-defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+# defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
 # Automatically quit printer app once the print jobs complete
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
@@ -90,7 +90,7 @@ defaults write com.apple.CrashReporter DialogType -string "none"
 
 # Enable full keyboard access for all controls
 # (e.g. enable Tab in modal dialogs)
-defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+# defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
 # Disable press-and-hold for keys in favor of key repeat
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
@@ -194,22 +194,22 @@ defaults write com.apple.dock launchanim -bool false
 # defaults write com.apple.dock autohide -bool true
 
 # Make Dock icons of hidden applications translucent
-defaults write com.apple.dock showhidden -bool true
+# defaults write com.apple.dock showhidden -bool true
 
 # No bouncing icons
 defaults write com.apple.dock no-bouncing -bool true
 
 # Disable hot corners
-defaults write com.apple.dock wvous-tl-corner -int 0
-defaults write com.apple.dock wvous-tr-corner -int 0
-defaults write com.apple.dock wvous-bl-corner -int 0
-defaults write com.apple.dock wvous-br-corner -int 0
+# defaults write com.apple.dock wvous-tl-corner -int 0
+# defaults write com.apple.dock wvous-tr-corner -int 0
+# defaults write com.apple.dock wvous-bl-corner -int 0
+# defaults write com.apple.dock wvous-br-corner -int 0
 
 # Don't show recently used applications in the Dock
 # defaults write com.Apple.Dock show-recents -bool false
 
 # Animate Dock Hide & Show but remove the delay
-defaults write com.apple.Dock autohide-delay -float 0 && killall Dock
+defaults write com.apple.dock autohide-delay -float 0; defaults write com.apple.dock autohide-time-modifier -int 0; killall Dock
 
 for app in "Address Book" "Calendar" "Contacts" "Dock" "Finder" "Mail" "Safari" "SystemUIServer" "iCal"; do
   killall "${app}" &> /dev/null
