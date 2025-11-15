@@ -1,7 +1,7 @@
 " --------------------------------------
 " Brajeshwar, https://brajeshwar.com
 " Start: Jan 1, 2024
-" Edited: Jan 13, 2024
+" Edited Last: Nov 14, 2025
 " --------------------------------------
 
 set nocompatible		" Disable compatibility with vi which can cause unexpected issues
@@ -52,13 +52,10 @@ syntax enable           " Enable syntax highlighting
 " --------------------------------------
 
 " Plugins
-call plug#begin()
-  Plug 'preservim/nerdtree'
-  Plug 'arcticicestudio/nord-vim'
-call plug#end()
 
 " Plugin Settings
-autocmd VimEnter * NERDTree     " Start NERDTree and leave the cursor in it
+
+" --------------------------------------
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -91,15 +88,15 @@ set showmode            " display the current mode
 
 " Set font according to system
 if has("mac") || has("macunix")
-    set gfn=Monaco:h15
+    set gfn=Monaco:h16
 elseif has("win16") || has("win32")
-    set gfn=Monaco:h15
+    set gfn=Monaco:h16
 elseif has("gui_gtk2")
-    set gfn=Monaco:h15
+    set gfn=Monaco:h16
 elseif has("linux")
-    set gfn=Monaco:h15
+    set gfn=Monaco:h16
 elseif has("unix")
-    set gfn=Monospace\ 11
+    set gfn=Monospace\ 13
 endif
 
 " Disable scrollbars (real hackers don't use scrollbars for navigation!)

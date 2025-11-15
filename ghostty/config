@@ -2,8 +2,13 @@
 # $ ghostty +list-themes
 theme = Nord
 
-window-width = 120
-window-height = 42
+shell-integration = zsh
+mouse-hide-while-typing = true
+scrollback-limit = 999
+
+window-width = 108
+window-height = 36
+window-save-state = always
 
 font-family = Monaco
 font-size = 16

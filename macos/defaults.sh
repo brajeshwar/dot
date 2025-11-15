@@ -1,4 +1,4 @@
-SCREENSHOTS_FOLDER="${HOME}/Screenshots"
+SCREENSHOTS_FOLDER="${HOME}/_/Vault/Screenshots"
 
 # Topics
 #
