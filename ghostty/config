@@ -3,7 +3,7 @@
 theme = Nord
 
 shell-integration = zsh
-mouse-hide-while-typing = true
+mouse-hide-while-typing = false
 scrollback-limit = 999
 
 window-width = 108
