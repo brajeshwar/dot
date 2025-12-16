@@ -1,14 +1,26 @@
-# Intel Homebrew usually lives in /usr/local; Apple Silicon in /opt/homebrew.
-# Both commands below auto-detect the prefix via brew.
-export OPENSSL_PREFIX="$(brew --prefix openssl@3)"
-export PKG_CONFIG_PATH="$OPENSSL_PREFIX/lib/pkgconfig"
-export CPPFLAGS="-I$OPENSSL_PREFIX/include"
-export LDFLAGS="-L$OPENSSL_PREFIX/lib"
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$OPENSSL_PREFIX"
+# ---------------------------------
+# Minimal Bash login setup
+# ---------------------------------
 
-eval "$(rbenv init - bash)"
+# Homebrew OpenSSL (only if brew exists)
+if command -v brew >/dev/null; then
+  OPENSSL_PREFIX="$(brew --prefix openssl@3 2>/dev/null)"
+
+  if [ -d "$OPENSSL_PREFIX" ]; then
+    export PKG_CONFIG_PATH="$OPENSSL_PREFIX/lib/pkgconfig"
+    export CPPFLAGS="-I$OPENSSL_PREFIX/include"
+    export LDFLAGS="-L$OPENSSL_PREFIX/lib"
+    export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$OPENSSL_PREFIX"
+  fi
+fi
+
+# rbenv (bash only)
+if command -v rbenv >/dev/null; then
+  eval "$(rbenv init - bash)"
+fi
+
+# GPG (interactive)
 export GPG_TTY=$(tty)
 
-# load default .profile
-[[ -s "$HOME/.profile" ]] && source "$HOME/.profile"
-. "/Users/brajeshwar/.deno/env"
+# deno (bash fallback)
+[ -f "$HOME/.deno/env" ] && . "$HOME/.deno/env"

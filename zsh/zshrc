@@ -1,25 +1,30 @@
-# clean, simple, minimal
+# ---------------------------------
+# Prompt (clean, simple, minimal)
+# ---------------------------------
 PROMPT='%{%F{red}%}%~ %{%F{yellow}%}% › %{%F{reset_color}%}%'
 
-path=('/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:' $path)
-export PATH
 
-# GPG
+# ---------------------------------
+# GPG (interactive only)
+# ---------------------------------
 export GPG_TTY=$(tty)
 gpgconf --launch gpg-agent
 
-# rbenv
-eval "$(rbenv init - zsh)"
+# ---------------------------------
+# rbenv (interactive only)
+# ---------------------------------
+if command -v rbenv >/dev/null; then
+  eval "$(rbenv init - zsh)"
+fi
 
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-. "/Users/brajeshwar/.deno/env"
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+# ---------------------------------
+# Shell behavior
+# ---------------------------------
+setopt autocd
+setopt correct
+setopt hist_ignore_dups
 
-# Python
-export PATH="$(python3 -m site --user-base)/bin:$PATH"
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history

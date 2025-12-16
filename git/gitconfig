@@ -1,106 +1,64 @@
 # Git Config
-# Late Update: Jan 1, 2024
+# Late Update: Dec 16, 2025
 
 [user]
-	name = 'Brajeshwar Oinam'
-	email = 'brajeshwar@oinam.com'
-	signingkey = 47EE96D63DFDA9372079337A9C9CD08302E7C29F
+    name = Brajeshwar Oinam
+    email = brajeshwar@oinam.com
+    signingkey = 47EE96D63DFDA9372079337A9C9CD08302E7C29F
 
 [gpg]
-	program = gpg
+    program = gpg
 
 [commit]
-    gpsign = true
     gpgsign = true
 
-[github]
-    user = brajeshwar
-
-[gitlab]
-    user = brajeshwar
-
-[url "git@github.com:"]
-    insteadOf = "https://github.com/"
+[tag]
+    gpgSign = true
 
 [credential]
     helper = osxkeychain
 
 [core]
-    editor = "vim"
-	excludesfile = ~/.gitignore_global
+    editor = vim
+    excludesfile = ~/.gitignore_global
+    whitespace = space-before-tab,indent-with-non-tab,trailing-space
+    autocrlf = false
 
 [grep]
     lineNumber = true
 
-# Treat spaces before tabs, lines that are indented with 8 or more spaces,
-# and all kinds of trailing whitespace as an error
-
-whitespace = space-before-tab,indent-with-non-tab,trailing-space
-editor = sublime -n -w
-autocrlf = false
+[url "git@github.com:"]
+    insteadOf = https://github.com/
 
 [alias]
-  amend       = !git add -A && git commit --amend --no-edit
-  c           = "!git add -A && git commit -m "
-  caa         = commit -a --amend -C HEAD # Put whatever I've done into the previous commit
-  co          = checkout
-  del         = rm $(git ls-files --deleted) # Remove deleted files from Git
-  fo          = fetch origin --prune
-  ignored     = !git ls-files -v | grep "^[[:lower:]]"
-  lg          = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
-  pullm       = pull --rebase origin main
-  pushall     = !git remote | xargs -n1 git push
-  pushalltags = !git remote | xargs -n1 git push --tags
-  pushm       = push origin main
-  pushd       = push origin dev
-  s           = status -s -b
-  sign        = "!git add -A && git commit -S -m "
-  undo        = reset --soft HEAD^
-
-[push]
-    default = simple
+    amend = !git add -A && git commit --amend --no-edit
+    c     = !git add -A && git commit -m
+    caa   = commit -a --amend -C HEAD
+    co    = checkout
+    fo    = fetch origin --prune
+    lg    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit
+    pullm = pull --rebase origin main
+    pushm = push origin main
+    s     = status -sb
+    sign  = !git add -A && git commit -S -m
+    undo  = reset --soft HEAD^
 
 [color]
-	ui = true
-
-[color "branch"]
-    current = red
-    local = green
-    remote = blue
-
-[color "diff"]
-    meta = yellow bold
-    frag = magenta bold
-    old = red bold
-    new = green bold
-
-[color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
+    ui = true
 
 [merge]
     stat = true
-    log = true # Include summaries of merged commits in newly created merge commit messages
+    log = true
 
 [mergetool]
     keepBackup = true
-
-# Use `origin` as the default remote
     prompt = false
 
-[branch "main"]
-    remote = origin
-    merge = refs/heads/main
+[init]
+    defaultBranch = main
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-
-[init]
-	defaultBranch = main
-
-[tag]
-  gpgSign = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true

@@ -1,9 +1,10 @@
-# GPG
-export GPG_TTY=$(tty)
+# ---------------------------------
+# Bash interactive shell only
+# ---------------------------------
 
-export NODE_PATH='/usr/local/lib/node_modules'
-
-# nvm
-source $(brew --prefix nvm)/nvm.sh
-[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh
-. "/Users/brajeshwar/.deno/env"
+# Enable bash completion (macOS/Homebrew)
+if [ -r /opt/homebrew/etc/profile.d/bash_completion.sh ]; then
+  . /opt/homebrew/etc/profile.d/bash_completion.sh
+elif [ -r /usr/local/etc/profile.d/bash_completion.sh ]; then
+  . /usr/local/etc/profile.d/bash_completion.sh
+fi

@@ -19,3 +19,4 @@ ln -s ~/folder/README.md ~/README
 - [dotfiles on GitHub](https://dotfiles.github.io), the Unofficial Guide
 - [Chezmoi](https://www.chezmoi.io)
 - [GNU Stow](https://www.gnu.org/software/stow/)
+- [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir/latest/)

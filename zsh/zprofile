@@ -1,2 +1,39 @@
-PATH="/Library/Frameworks/Python.framework/Versions/3.8/bin:${PATH}"
-export PATH
+# ---------------------------------
+# Homebrew (authoritative PATH)
+# ---------------------------------
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# ---------------------------------
+# Language runtimes
+# ---------------------------------
+
+# nvm
+# load only after 1st use (makes shell faster to start)
+# Last (to revert!) Dec 15, 2025
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+export NVM_DIR="$HOME/.nvm"
+
+nvm() {
+  unset -f nvm node npm npx
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  nvm "$@"
+}
+
+node() { nvm; node "$@"; }
+npm()  { nvm; npm "$@"; }
+npx()  { nvm; npx "$@"; }
+
+
+# deno
+[ -f "$HOME/.deno/env" ] && . "$HOME/.deno/env"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# python user installs (pip --user)
+PYTHON_USER_BIN="$(python3 -m site --user-base 2>/dev/null)/bin"
+[ -d "$PYTHON_USER_BIN" ] && export PATH="$PYTHON_USER_BIN:$PATH"
