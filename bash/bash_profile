@@ -1,26 +1,10 @@
-# ---------------------------------
-# Minimal Bash login setup
-# ---------------------------------
-
-# Homebrew OpenSSL (only if brew exists)
-if command -v brew >/dev/null; then
-  OPENSSL_PREFIX="$(brew --prefix openssl@3 2>/dev/null)"
-
-  if [ -d "$OPENSSL_PREFIX" ]; then
-    export PKG_CONFIG_PATH="$OPENSSL_PREFIX/lib/pkgconfig"
-    export CPPFLAGS="-I$OPENSSL_PREFIX/include"
-    export LDFLAGS="-L$OPENSSL_PREFIX/lib"
-    export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$OPENSSL_PREFIX"
-  fi
-fi
+# Shared environment
+[ -f "$HOME/.env" ] && . "$HOME/.env"
 
 # rbenv (bash only)
 if command -v rbenv >/dev/null; then
   eval "$(rbenv init - bash)"
 fi
 
-# GPG (interactive)
+# GPG
 export GPG_TTY=$(tty)
-
-# deno (bash fallback)
-[ -f "$HOME/.deno/env" ] && . "$HOME/.deno/env"

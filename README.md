@@ -10,8 +10,23 @@ ln -s ~/folder/README.md ~/README
 ```
 
 // overwrite/force
-
 `ln -sf [source] [link]`
+
+`.env`: A common POSIX-compatible (no prompts, aliases, functions, or shell-specific logic) sourced by `.bash_profile`, and `.zprofile`.
+
+`.bashrc` (legacy), and `.zshrc` (default) are interactive shells.
+
+Should works consistently across Terminal, SSH, tmux, and CI.
+Zsh is modern and fast.
+Bash is the safe fallback.
+
+## Bootstrap
+
+// executable
+`chmod +x bootstrap.sh`
+
+// run
+`./bootstrap.sh`
 
 ### References
 

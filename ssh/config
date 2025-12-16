@@ -1,0 +1,31 @@
+# GLOBAL DEFAULTS
+Host *
+  AddKeysToAgent yes
+  IgnoreUnknown UseKeychain
+  UseKeychain yes
+  ServerAliveInterval 60
+  ServerAliveCountMax 3
+  ControlMaster auto
+  ControlPath ~/.ssh/cm-%r@%h:%p
+  ControlPersist 10m
+
+# Brajeshwar
+Host github-brajeshwar
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_rsa
+  IdentitiesOnly yes
+
+# Work
+Host github-work
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_work
+  IdentitiesOnly yes
+
+# Laaija
+Host github-laaija
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/laaija
+  IdentitiesOnly yes
