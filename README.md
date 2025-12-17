@@ -7,10 +7,9 @@ https://github.com/brajeshwar/dot
 ```
 ln -s [source] [link]
 ln -s ~/folder/README.md ~/README
-```
-
 // overwrite/force
-`ln -sf [source] [link]`
+ln -sf [source] [link]
+```
 
 `.env`: A common POSIX-compatible (no prompts, aliases, functions, or shell-specific logic) sourced by `.bash_profile`, and `.zprofile`.
 
@@ -22,16 +21,18 @@ Bash is the safe fallback.
 
 ## Bootstrap
 
-// executable
+```sh
+// make it executable
 `chmod +x bootstrap.sh`
 
 // run
-`./bootstrap.sh`
+./bootstrap.sh
+```
 
 ### References
 
 - [Awesome Dotfiles](https://project-awesome.org/webpro/awesome-dotfiles)
 - [dotfiles on GitHub](https://dotfiles.github.io), the Unofficial Guide
-- [Chezmoi](https://www.chezmoi.io)
-- [GNU Stow](https://www.gnu.org/software/stow/)
+- [Chezmoi](https://www.chezmoi.io) manages your dotfiles across multiple diverse machines, securely.
+- [GNU Stow](https://www.gnu.org/software/stow/) is a symlink farm manager which takes distinct packages of software and/or data located in separate directories on the filesystem, and makes them appear to be installed in the same place.
 - [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir/latest/)

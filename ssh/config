@@ -13,7 +13,7 @@ Host *
 Host github-brajeshwar
   HostName github.com
   User git
-  IdentityFile ~/.ssh/id_rsa
+  IdentityFile ~/.ssh/id_ed25519_ONM_MBP2025
   IdentitiesOnly yes
 
 # Work
