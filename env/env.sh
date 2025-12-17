@@ -14,9 +14,12 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # deno
 [ -f "$HOME/.deno/env" ] && . "$HOME/.deno/env"
 
-# Python user installs
-PYTHON_USER_BIN="$(python3 -m site --user-base 2>/dev/null)/bin"
-[ -d "$PYTHON_USER_BIN" ] && PATH="$PYTHON_USER_BIN:$PATH"
+# Python
+PYTHON_USER_BASE="$(python3 -m site --user-base 2>/dev/null)"
+if [ -n "$PYTHON_USER_BASE" ]; then
+  mkdir -p "$PYTHON_USER_BASE/bin"
+  PATH="$PYTHON_USER_BASE/bin:$PATH"
+fi
 export PATH
 
 # OpenSSL (for building Ruby)

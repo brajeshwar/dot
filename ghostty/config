@@ -10,6 +10,9 @@ window-width = 108
 window-height = 36
 window-save-state = always
 
+cursor-style = bar
+cursor-style-blink = true
+
 font-family = Monaco
 font-size = 16
 keybind = shift+enter=text:\x1b\r
