@@ -32,3 +32,17 @@ if command -v brew >/dev/null 2>&1; then
     export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$OPENSSL_PREFIX"
   fi
 fi
+
+
+# ---------------------------------
+# Custom Tools
+# First, make them executable
+# chmod +x ~/_root/tools/*
+# ---------------------------------
+
+TOOLS_DIR="$HOME/_root/tools"
+
+if [ -d "$TOOLS_DIR" ]; then
+  PATH="$TOOLS_DIR:$PATH"
+fi
+export PATH
