@@ -1,0 +1,18 @@
+# ---------------------------------
+# Minimal environment (always loaded)
+# ---------------------------------
+
+# Home directory
+export HOME="${HOME:-/Users/brajeshwar}"
+
+# pipx / user binaries
+if [ -d "$HOME/.local/bin" ]; then
+  PATH="$HOME/.local/bin:$PATH"
+fi
+
+# personal tools
+if [ -d "$HOME/_root/tools" ]; then
+  PATH="$HOME/_root/tools:$PATH"
+fi
+
+export PATH

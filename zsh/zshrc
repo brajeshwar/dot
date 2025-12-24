@@ -4,6 +4,9 @@
 PROMPT='%{%F{red}%}%~ %{%F{yellow}%}% › %{%F{reset_color}%}%'
 
 
+[ -f "$HOME/.env" ] && . "$HOME/.env"
+
+
 # ---------------------------------
 # GPG (interactive only)
 # ---------------------------------
@@ -17,7 +20,6 @@ if command -v rbenv >/dev/null; then
   eval "$(rbenv init - zsh)"
 fi
 
-
 # ---------------------------------
 # Shell behavior
 # ---------------------------------
@@ -28,5 +30,3 @@ setopt hist_ignore_dups
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
-# Created by `pipx` on 2025-12-17 07:45:50
-export PATH="$PATH:/Users/brajeshwar/.local/bin"

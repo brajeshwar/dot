@@ -22,6 +22,14 @@ if [ -n "$PYTHON_USER_BASE" ]; then
 fi
 export PATH
 
+# pipx (Python user executables)
+PIPX_BIN_DIR="$HOME/.local/bin"
+if [ -d "$PIPX_BIN_DIR" ]; then
+  PATH="$PIPX_BIN_DIR:$PATH"
+fi
+export PATH
+
+
 # OpenSSL (for building Ruby)
 if command -v brew >/dev/null 2>&1; then
   OPENSSL_PREFIX="$(brew --prefix openssl@3 2>/dev/null)"
