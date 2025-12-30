@@ -8,3 +8,7 @@ if [ -r /opt/homebrew/etc/profile.d/bash_completion.sh ]; then
 elif [ -r /usr/local/etc/profile.d/bash_completion.sh ]; then
   . /usr/local/etc/profile.d/bash_completion.sh
 fi
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/brajeshwar/.lmstudio/bin"
+# End of LM Studio CLI section
+

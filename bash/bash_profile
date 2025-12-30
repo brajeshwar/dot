@@ -8,3 +8,8 @@ fi
 
 # GPG
 export GPG_TTY=$(tty)
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/brajeshwar/.lmstudio/bin"
+# End of LM Studio CLI section
+

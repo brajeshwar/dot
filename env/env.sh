@@ -2,55 +2,24 @@
 # Shared environment (POSIX-safe)
 # ---------------------------------
 
-# Homebrew (Apple Silicon)
-if [ -x /opt/homebrew/bin/brew ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
 # bun
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+PATH="$BUN_INSTALL/bin:$PATH"
 
-# deno
-[ -f "$HOME/.deno/env" ] && . "$HOME/.deno/env"
+# deno (explicit, no activation script)
+export DENO_INSTALL="$HOME/.deno"
+PATH="$DENO_INSTALL/bin:$PATH"
 
-# Python
-PYTHON_USER_BASE="$(python3 -m site --user-base 2>/dev/null)"
-if [ -n "$PYTHON_USER_BASE" ]; then
-  mkdir -p "$PYTHON_USER_BASE/bin"
-  PATH="$PYTHON_USER_BASE/bin:$PATH"
-fi
-export PATH
+# Python user binaries (static path)
+PYTHON_USER_BASE="$HOME/Library/Python/3.11"
+PATH="$PYTHON_USER_BASE/bin:$PATH"
 
-# pipx (Python user executables)
+# pipx
 PIPX_BIN_DIR="$HOME/.local/bin"
-if [ -d "$PIPX_BIN_DIR" ]; then
-  PATH="$PIPX_BIN_DIR:$PATH"
-fi
-export PATH
+[ -d "$PIPX_BIN_DIR" ] && PATH="$PIPX_BIN_DIR:$PATH"
 
-
-# OpenSSL (for building Ruby)
-if command -v brew >/dev/null 2>&1; then
-  OPENSSL_PREFIX="$(brew --prefix openssl@3 2>/dev/null)"
-  if [ -d "$OPENSSL_PREFIX" ]; then
-    export PKG_CONFIG_PATH="$OPENSSL_PREFIX/lib/pkgconfig"
-    export CPPFLAGS="-I$OPENSSL_PREFIX/include"
-    export LDFLAGS="-L$OPENSSL_PREFIX/lib"
-    export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$OPENSSL_PREFIX"
-  fi
-fi
-
-
-# ---------------------------------
-# Custom Tools
-# First, make them executable
-# chmod +x ~/_root/tools/*
-# ---------------------------------
-
+# Custom tools
 TOOLS_DIR="$HOME/_root/tools"
+[ -d "$TOOLS_DIR" ] && PATH="$TOOLS_DIR:$PATH"
 
-if [ -d "$TOOLS_DIR" ]; then
-  PATH="$TOOLS_DIR:$PATH"
-fi
 export PATH

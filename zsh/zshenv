@@ -5,6 +5,9 @@
 # Home directory
 export HOME="${HOME:-/Users/brajeshwar}"
 
+# Node Version Manager (env only — no sourcing here)
+export NVM_DIR="$HOME/.nvm"
+
 # pipx / user binaries
 if [ -d "$HOME/.local/bin" ]; then
   PATH="$HOME/.local/bin:$PATH"
