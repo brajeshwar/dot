@@ -47,7 +47,7 @@ Responsibilities:
 
 Typical contents:
 - `~/.local/bin` (pipx-installed tools)
-- `~/ _root/tools` (personal scripts)
+- `~/_root/tools` (personal scripts)
 
 This file exists so tools see the correct PATH immediately and do not attempt to modify shell configuration files.
 
@@ -120,10 +120,10 @@ pipx ensurepath
 
 ## Personal Tools
 
-Custom scripts live in:
+Custom & personal scripts live in:
 
 ```
-~/ _root/tools
+~/_root/tools
 ```
 
 Requirements:
