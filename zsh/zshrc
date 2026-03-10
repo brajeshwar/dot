@@ -1,7 +1,7 @@
 # ---------------------------------
 # Prompt (clean, simple, minimal)
 # ---------------------------------
-PROMPT='%{%F{red}%}%~ %{%F{yellow}%}% › %{%F{reset_color}%}%'
+PROMPT='%F{red}%~ %F{yellow}› %f'
 
 # ---------------------------------
 # GPG (interactive only)
@@ -38,3 +38,9 @@ HISTFILE=~/.zsh_history
 # PATH additions
 # ---------------------------------
 export PATH="$PATH:/Users/brajeshwar/.lmstudio/bin"
+
+# Obsidian
+export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
+
+
+export TERM=xterm-256color

@@ -116,7 +116,7 @@ defaults write com.apple.screencapture location -string "${SCREENSHOTS_FOLDER}"
 defaults write com.apple.screencapture type -string "png"
 
 # Disable shadow in screenshots
-# defaults write com.apple.screencapture disable-shadow -bool true
+defaults write com.apple.screencapture disable-shadow -bool true
 
 
 ###############################################################################

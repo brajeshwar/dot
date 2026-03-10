@@ -16,3 +16,5 @@ cursor-style-blink = true
 font-family = Monaco
 font-size = 16
 keybind = shift+enter=text:\x1b\r
+
+copy-on-select = clipboard
