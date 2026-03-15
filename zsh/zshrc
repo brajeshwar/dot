@@ -17,13 +17,6 @@ if command -v rbenv >/dev/null; then
 fi
 
 # ---------------------------------
-# nvm (interactive only — optional)
-# ---------------------------------
-if [ -s "$NVM_DIR/nvm.sh" ]; then
-  . "$NVM_DIR/nvm.sh"
-fi
-
-# ---------------------------------
 # Shell behavior
 # ---------------------------------
 setopt autocd
@@ -35,12 +28,6 @@ SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
 # ---------------------------------
-# PATH additions
+# OpenClaw completion
 # ---------------------------------
-export PATH="$PATH:/Users/brajeshwar/.lmstudio/bin"
-
-# Obsidian
-export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
-
-
-export TERM=xterm-256color
+[ -f "$HOME/.openclaw-dench/completions/openclaw.zsh" ] && source "$HOME/.openclaw-dench/completions/openclaw.zsh"

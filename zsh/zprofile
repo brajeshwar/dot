@@ -8,14 +8,11 @@ if [ -x /opt/homebrew/bin/brew ]; then
 fi
 
 # Shared shell environment (POSIX-safe)
-# NOTE: This must NOT be .env
-[ -f "$HOME/env.sh" ] && . "$HOME/env.sh"
+[ -f "$HOME/.paths" ] && . "$HOME/.paths"
 
 # ---------------------------------
-# Lazy nvm (zsh-only, safe)
+# Lazy nvm (zsh-only, login scope)
 # ---------------------------------
-export NVM_DIR="$HOME/.nvm"
-
 nvm() {
   unset -f nvm node npm npx
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
@@ -25,10 +22,3 @@ nvm() {
 node() { nvm; command node "$@"; }
 npm()  { nvm; command npm "$@"; }
 npx()  { nvm; command npx "$@"; }
-
-# ---------------------------------
-# pipx (login scope; PATH only)
-# ---------------------------------
-PIPX_BIN_DIR="$HOME/.local/bin"
-[ -d "$PIPX_BIN_DIR" ] && PATH="$PIPX_BIN_DIR:$PATH"
-export PATH
