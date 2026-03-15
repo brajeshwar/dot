@@ -40,7 +40,6 @@
     pullm = pull --rebase origin main
     pushm = push origin main
     s     = status -sb
-    sign  = !git add -A && git commit -S -m
     undo  = reset --soft HEAD^
 
 [color]
