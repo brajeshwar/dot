@@ -1,0 +1,63 @@
+# Jujutsu Config
+# https://jj-vcs.github.io/jj/latest/config/
+
+[user]
+name  = "Brajeshwar Oinam"
+email = "brajeshwar@oinam.com"
+
+# --------------------------------------
+# UI
+# --------------------------------------
+
+[ui]
+editor          = "vim"
+color           = "auto"
+pager           = ":builtin"
+default-command = "log"   # bare `jj` shows the log
+
+# --------------------------------------
+# Signing (mirrors git gpgsign = true)
+# --------------------------------------
+
+[signing]
+sign-all = true
+backend  = "gpg"
+key      = "47EE96D63DFDA9372079337A9C9CD08302E7C29F"
+
+# --------------------------------------
+# Git backend
+# --------------------------------------
+
+[git]
+# Don't auto-create local bookmarks for every remote branch
+auto-local-bookmark = false
+# Prefix for bookmarks auto-created on push
+push-bookmark-prefix = "push-"
+
+# --------------------------------------
+# Aliases
+# jj has no staging area — the working copy is always tracked.
+# Aliases here mirror the intent of gitconfig aliases, not their mechanics.
+# --------------------------------------
+
+[aliases]
+# Short status
+s     = ["status"]
+
+# Compact log of all revisions (mirrors git lg)
+lg    = ["log", "-r", "all()", "--template", "builtin_log_compact"]
+
+# Fetch from all remotes (mirrors git fo)
+fo    = ["git", "fetch", "--all-remotes"]
+
+# Push current bookmark to origin (mirrors git pushm)
+pushm = ["git", "push", "--remote", "origin"]
+
+# Amend the current change description (mirrors git amend intent)
+amend = ["describe"]
+
+# New child change — move forward (mirrors git checkout intent)
+n     = ["new"]
+
+# Squash working copy into parent (fold uncommitted edits up)
+sq    = ["squash"]

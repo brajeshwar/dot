@@ -135,10 +135,22 @@ printf "\n--- zed/settings.json\n"
 assert_not_contains zed/settings.json "  ],"           "zed: no trailing comma after file_scan_exclusions"
 
 # -----------------------------------------------------------------------
+printf "\n--- jujutsu/config.toml\n"
+# -----------------------------------------------------------------------
+
+assert_file         jujutsu/config.toml                       "jujutsu/config.toml exists"
+assert_contains     jujutsu/config.toml "brajeshwar@oinam.com" "jujutsu: user email set"
+assert_contains     jujutsu/config.toml "sign-all = true"      "jujutsu: sign-all enabled"
+assert_contains     jujutsu/config.toml "backend  = \"gpg\""   "jujutsu: GPG signing backend"
+assert_contains     jujutsu/config.toml "editor"               "jujutsu: editor set"
+assert_contains     bootstrap.sh "jujutsu/config.toml"         "bootstrap.sh: links jujutsu config"
+assert_symlink      "$HOME/.config/jj/config.toml"             "~/.config/jj/config.toml symlink exists"
+
+# -----------------------------------------------------------------------
 printf "\n--- Empty dirs have .gitkeep\n"
 # -----------------------------------------------------------------------
 
-for dir in claude config emacs jujutsu sublimetext; do
+for dir in claude config emacs sublimetext; do
   assert_file "$dir/.gitkeep" "$dir/.gitkeep exists"
 done
 
