@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# Late Update: Mar 15, 2026
 set -eu
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"

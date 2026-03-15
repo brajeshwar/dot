@@ -1,4 +1,5 @@
-# Shared runtime paths
+# Bash Profile
+# Late Update: Mar 15, 2026
 [ -f "$HOME/.paths" ] && . "$HOME/.paths"
 
 # rbenv (bash only)

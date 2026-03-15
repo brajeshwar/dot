@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Late Update: Mar 15, 2026
 
 # Install command-line tools using Homebrew.
 

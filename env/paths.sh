@@ -2,6 +2,7 @@
 # Shared runtime PATH (POSIX-safe)
 # Sourced by .zprofile and .bash_profile for login shells.
 # ~/.local/bin and ~/_root/tools are set in .zshenv (all shells).
+# Late Update: Mar 15, 2026
 # ---------------------------------
 
 # bun

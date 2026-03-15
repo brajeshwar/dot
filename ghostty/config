@@ -1,3 +1,6 @@
+# Ghostty Config
+# Late Update: Mar 15, 2026
+#
 # Available Themes
 # $ ghostty +list-themes
 theme = Nord

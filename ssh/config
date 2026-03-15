@@ -1,3 +1,6 @@
+# SSH Config
+# Late Update: Mar 15, 2026
+
 # GLOBAL DEFAULTS
 Host *
   AddKeysToAgent yes
