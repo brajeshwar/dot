@@ -29,6 +29,7 @@ link "zsh/zshrc"             "$HOME/.zshrc"
 link "bash/bash_profile"     "$HOME/.bash_profile"
 link "bash/bashrc"           "$HOME/.bashrc"
 link "git/gitconfig"         "$HOME/.gitconfig"
+link "git/gitignore_global"  "$HOME/.gitignore_global"
 link "ssh/config"            "$HOME/.ssh/config"
 link "jujutsu/config.toml"   "$HOME/.config/jj/config.toml"
 
