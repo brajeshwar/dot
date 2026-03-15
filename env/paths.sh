@@ -1,5 +1,7 @@
 # ---------------------------------
-# Shared environment (POSIX-safe)
+# Shared runtime PATH (POSIX-safe)
+# Sourced by .zprofile and .bash_profile for login shells.
+# ~/.local/bin and ~/_root/tools are set in .zshenv (all shells).
 # ---------------------------------
 
 # bun
@@ -14,12 +16,10 @@ PATH="$DENO_INSTALL/bin:$PATH"
 PYTHON_USER_BASE="$HOME/Library/Python/3.11"
 PATH="$PYTHON_USER_BASE/bin:$PATH"
 
-# pipx
-PIPX_BIN_DIR="$HOME/.local/bin"
-[ -d "$PIPX_BIN_DIR" ] && PATH="$PIPX_BIN_DIR:$PATH"
+# LM Studio CLI
+PATH="$HOME/.lmstudio/bin:$PATH"
 
-# Custom tools
-TOOLS_DIR="$HOME/_root/tools"
-[ -d "$TOOLS_DIR" ] && PATH="$TOOLS_DIR:$PATH"
+# Obsidian (CLI access to app binary)
+PATH="/Applications/Obsidian.app/Contents/MacOS:$PATH"
 
 export PATH

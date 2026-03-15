@@ -20,7 +20,7 @@ echo "Bootstrapping dotfiles..."
 
 mkdir -p "$HOME/.ssh"
 
-link "env/env.sh"         "$HOME/.env"
+link "env/paths.sh"       "$HOME/.paths"
 link "zsh/zprofile"       "$HOME/.zprofile"
 link "zsh/zshenv"         "$HOME/.zshenv"
 link "zsh/zshrc"          "$HOME/.zshrc"
