@@ -27,5 +27,5 @@ Host github-work
 Host github-laaija
   HostName github.com
   User git
-  IdentityFile ~/.ssh/laaija
+  IdentityFile ~/.ssh/id_ed25519_laaija
   IdentitiesOnly yes
