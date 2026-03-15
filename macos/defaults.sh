@@ -16,7 +16,7 @@ SCREENSHOTS_FOLDER="${HOME}/_/Vault/Screenshots"
 # - Activity Monitor
 # - Software Updates
 
-osascript -e 'tell application "System Preferences" to quit'
+osascript -e 'tell application "System Settings" to quit'
 
 # Ask for the administrator password upfront
 sudo -v
@@ -34,9 +34,6 @@ sudo systemsetup -setrestartfreeze on 2> /dev/null
 
 # Set standby delay to 24 hours (default is 1 hour)
 sudo pmset -a standbydelay 86400
-
-# Disable Sudden Motion Sensor
-sudo pmset -a sms 0
 
 # Disable audio feedback when volume is changed
 defaults write com.apple.sound.beep.feedback -bool false
@@ -140,9 +137,6 @@ defaults write com.apple.finder ShowStatusBar -bool true
 
 # Finder: show path bar
 defaults write com.apple.finder ShowPathbar -bool true
-
-# Finder: allow text selection in Quick Look
-defaults write com.apple.finder QLEnableTextSelection -bool true
 
 # Display full POSIX path as Finder window title
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
