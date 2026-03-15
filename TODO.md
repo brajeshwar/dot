@@ -2,6 +2,8 @@
 
 A prioritized checklist of fixes based on a critical review of the repo.
 
+Last updated: 2026-03-15
+
 ---
 
 ## 1. PATH Cleanup
