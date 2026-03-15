@@ -28,7 +28,7 @@
     lineNumber = true
 
 [url "git@github.com:"]
-    insteadOf = https://github.com/
+    pushInsteadOf = https://github.com/
 
 [alias]
     amend = !git add -A && git commit --amend --no-edit

@@ -60,7 +60,7 @@ A prioritized checklist of fixes based on a critical review of the repo.
 
 - [x] Remove `sign` alias — redundant since `gpgsign = true` is already set globally
 - [ ] Consider reviewing `amend` and `c` aliases — both run `git add -A` implicitly
-- [ ] Note: the `url` rewrite (HTTPS → SSH for GitHub) can break `go get` and HTTPS CI envs
+- [x] Switch `insteadOf` → `pushInsteadOf` so fetch/clone stays HTTPS, only push uses SSH
 
 ---
 
