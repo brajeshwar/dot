@@ -17,6 +17,10 @@
 *.sql
 *.sqlite
 
+# VCS metadata #
+#################
+.jj/
+
 # OS generated files #
 ######################
 .DS_Store
