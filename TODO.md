@@ -67,7 +67,7 @@ A prioritized checklist of fixes based on a critical review of the repo.
 ## 8. SSH Config
 
 - [x] Update `IdentityFile` reference to `~/.ssh/id_ed25519_laaija` (was `~/.ssh/laaija`)
-- [ ] **Manual step required:** rename the actual key file: `mv ~/.ssh/laaija ~/.ssh/id_ed25519_laaija`
+- [x] Rename the actual key file: `mv ~/.ssh/laaija ~/.ssh/id_ed25519_laaija`
 
 ---
 
