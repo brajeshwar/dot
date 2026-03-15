@@ -40,11 +40,12 @@ push-bookmark-prefix = "push-"
 # --------------------------------------
 
 [aliases]
-s     = ["status"]
-lg    = ["log", "-r", "all()", "--template", "builtin_log_compact"]
-fo    = ["git", "fetch", "--all-remotes"]
-pushm = ["git", "push", "--remote", "origin"]
-amend = ["describe"]
-n     = ["new"]
-sq    = ["squash"]
-c     = ["commit", "-m"]
+s     = ["status"]                                              # jj s               — working copy status
+lg    = ["log", "-r", "all()", "--template", "builtin_log_compact"] # jj lg          — full repo log, compact view
+fo    = ["git", "fetch", "--all-remotes"]                      # jj fo              — fetch from all remotes
+pushm = ["git", "push", "--remote", "origin"]                  # jj pushm           — push bookmarks to origin
+amend = ["describe"]                                           # jj amend -m "msg"  — reword current change (no new commit)
+n     = ["new"]                                                # jj n               — new empty child change (like git checkout -b)
+sq    = ["squash"]                                             # jj sq              — squash change into its parent
+c     = ["commit", "-m"]                                       # jj c "msg"         — describe + auto-open new child (like git add -A && git commit -m)
+bm    = ["bookmark", "set", "main", "-r", "@-"]                # jj bm              — move main bookmark to latest commit (@- = parent of empty working copy)

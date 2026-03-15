@@ -29,6 +29,11 @@ SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
 # ---------------------------------
+# Completion system
+# ---------------------------------
+autoload -Uz compinit && compinit
+
+# ---------------------------------
 # OpenClaw completion
 # ---------------------------------
 [ -f "$HOME/.openclaw-dench/completions/openclaw.zsh" ] && source "$HOME/.openclaw-dench/completions/openclaw.zsh"
