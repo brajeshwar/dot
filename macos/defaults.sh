@@ -1,5 +1,5 @@
 # macOS Defaults
-# Late Update: Mar 15, 2026
+# Edited: Mar 15, 2026
 
 SCREENSHOTS_FOLDER="${HOME}/_/Vault/Screenshots"
 
