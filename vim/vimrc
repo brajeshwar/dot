@@ -14,13 +14,11 @@ filetype indent on		" Load an indent file for the detected file type
 
 set wildmenu			" Turn on the Wild menu
 
-syntax on			    " Turn syntax highlighting on
+syntax enable           " Enable syntax highlighting
 set number			    " Add numbers to each line on the left-hand side
 set cursorline			" Highlight cursor line underneath the cursor horizontally
 " set cursorcolumn		" Highlight cursor line underneath the cursor vertically
 set autoindent          " auto indenting
-
-set cursorline          " highlight current line
 
 set shiftwidth=4		" Set shift width to 4 spaces
 set tabstop=4			" Set tab width to 4 columns
@@ -29,7 +27,7 @@ set foldcolumn=1		" Add a bit extra margin to the left
 set smarttab
 
 " backup off
-set nobackup			
+set nobackup
 set nowb
 set noswapfile
 
@@ -45,15 +43,6 @@ set lazyredraw			" Don't redraw while executing macros (good performance config)
 set magic			    " For regular expressions turn magic on
 set showmatch			" Show matching brackets when text indicator is over them
 set mat=2			    " How many tenths of a second to blink when matching brackets
-syntax enable           " Enable syntax highlighting
-
-" --------------------------------------
-" Plugins
-" --------------------------------------
-
-" Plugins
-
-" Plugin Settings
 
 " --------------------------------------
 
@@ -75,9 +64,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " Always show the status line
 set laststatus=2
 
-" Format the status line
-" set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
-
 " --------------------------------------
 " User Interface / GUI
 " --------------------------------------
@@ -86,18 +72,7 @@ colorscheme nord
 set tabpagemax=9        " max tabs to show
 set showmode            " display the current mode
 
-" Set font according to system
-if has("mac") || has("macunix")
-    set gfn=Monaco:h16
-elseif has("win16") || has("win32")
-    set gfn=Monaco:h16
-elseif has("gui_gtk2")
-    set gfn=Monaco:h16
-elseif has("linux")
-    set gfn=Monaco:h16
-elseif has("unix")
-    set gfn=Monospace\ 13
-endif
+set gfn=Monaco:h16
 
 " Disable scrollbars (real hackers don't use scrollbars for navigation!)
 set guioptions-=r
@@ -110,7 +85,7 @@ set guioptions-=L
 " --------------------------------------
 
 """"""""""""""""""""
-" => Turn persistent undo on 
+" => Turn persistent undo on
 "    means that you can undo even when you close a buffer/VIM
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 try
