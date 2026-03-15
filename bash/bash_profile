@@ -1,5 +1,5 @@
-# Shared environment
-[ -f "$HOME/.env" ] && . "$HOME/.env"
+# Shared runtime paths
+[ -f "$HOME/.paths" ] && . "$HOME/.paths"
 
 # rbenv (bash only)
 if command -v rbenv >/dev/null; then
@@ -8,8 +8,3 @@ fi
 
 # GPG
 export GPG_TTY=$(tty)
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/brajeshwar/.lmstudio/bin"
-# End of LM Studio CLI section
-
