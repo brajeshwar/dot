@@ -4,7 +4,7 @@ theme = Nord
 
 shell-integration = zsh
 mouse-hide-while-typing = false
-scrollback-limit = 999
+scrollback-limit = 10000
 
 window-width = 108
 window-height = 36
