@@ -48,7 +48,7 @@ Checks symlinks, PATH hygiene across all shell files, `env/paths.sh` contents, `
 
 ```
 ======================================
-  50 passed  |  0 failed
+  42 passed  |  0 failed
 ======================================
 ```
 
