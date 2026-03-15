@@ -12,9 +12,8 @@ brew upgrade
 BREW_PREFIX=$(brew --prefix)
 
 # Install GNU core utilities (those that come with macOS are outdated).
-# Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
+# coreutils provides sha256sum via gnubin — no manual symlink needed.
 brew install coreutils
-ln -s "${BREW_PREFIX}/bin/gsha256sum" "${BREW_PREFIX}/bin/sha256sum"
 
 # Install some other useful utilities like `sponge`.
 brew install moreutils
@@ -32,14 +31,14 @@ brew install findutils
 #   chsh -s "${BREW_PREFIX}/bin/bash";
 # fi;
 
-# Install `wget` with IRI support.
-brew install wget --with-iri
+# Install wget.
+brew install wget
 
 # Install GnuPG to enable PGP-signing commits.
 brew install gnupg
 
 # Install more recent versions of some macOS tools.
-brew install vim --with-override-system-vi
+brew install vim
 brew install grep
 brew install openssh
 
@@ -47,7 +46,7 @@ brew install openssh
 brew install git
 brew install git-lfs
 brew install gs
-brew install imagemagick --with-webp
+brew install imagemagick
 brew install ssh-copy-id
 brew install tree
 brew install eloston-chromium
