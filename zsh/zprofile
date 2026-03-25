@@ -23,3 +23,6 @@ nvm() {
 node() { nvm; command node "$@"; }
 npm()  { nvm; command npm "$@"; }
 npx()  { nvm; command npx "$@"; }
+
+# Added by Obsidian
+export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"

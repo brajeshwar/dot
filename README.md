@@ -36,6 +36,12 @@ Creates all required symlinks in `$HOME`. Safe to re-run — existing non-symlin
 
 **Personal scripts** — place executables in `~/_root/tools`; available in all shell contexts including SSH and scripts.
 
+**nvm** — nvm is lazy-loaded (deferred until first use of `nvm`, `node`, `npm`, or `npx`). This means globally installed npm packages won't be on PATH until nvm activates. Run this once per machine after installing nvm to set a default node version that activates automatically:
+
+```sh
+nvm alias default node
+```
+
 ## Testing
 
 Run after any changes to verify nothing is broken:
