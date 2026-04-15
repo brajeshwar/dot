@@ -1,5 +1,7 @@
 # SSH Config
-# Edited: Mar 15, 2026
+# To Add to the macOS Keychain
+# $ ssh-add ~/.ssh/id_ed25519_ONM_MBP2025
+# Edited: Mar 26, 2026
 
 # GLOBAL DEFAULTS
 Host *

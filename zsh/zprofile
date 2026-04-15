@@ -12,17 +12,10 @@ fi
 [ -f "$HOME/.paths" ] && . "$HOME/.paths"
 
 # ---------------------------------
-# Lazy nvm (zsh-only, login scope)
+# nvm (eager load)
 # ---------------------------------
-nvm() {
-  unset -f nvm node npm npx
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-  nvm "$@"
-}
-
-node() { nvm; command node "$@"; }
-npm()  { nvm; command npm "$@"; }
-npx()  { nvm; command npx "$@"; }
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 # Added by Obsidian
 export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
