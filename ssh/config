@@ -1,7 +1,7 @@
 # SSH Config
 # To Add to the macOS Keychain
 # $ ssh-add ~/.ssh/id_ed25519_ONM_MBP2025
-# Edited: Mar 26, 2026
+# Edited: Apr 19, 2026
 
 # GLOBAL DEFAULTS
 Host *
@@ -34,3 +34,13 @@ Host github-laaija
   User git
   IdentityFile ~/.ssh/id_ed25519_laaija
   IdentitiesOnly yes
+
+# Wipro
+Host github-wipro
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_wipro
+  IdentitiesOnly yes
+
+Host *
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"

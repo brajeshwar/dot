@@ -28,7 +28,7 @@ Creates all required symlinks in `$HOME`. Safe to re-run — existing non-symlin
 
 **`.zshrc`** contains no PATH logic. Prompt, shell options, history, completions only.
 
-**`.zprofile`** initializes Homebrew, sources `~/.paths`, and lazy-loads nvm (deferred until first use of `nvm`, `node`, `npm`, or `npx`).
+**`.zprofile`** initializes Homebrew, sources `~/.paths`, and eagerly loads nvm.
 
 ## Notes
 
@@ -53,6 +53,18 @@ Checks symlinks, PATH hygiene across all shell files, `env/paths.sh` contents, `
   42 passed  |  0 failed
 ======================================
 ```
+
+## Version Control
+
+This repo is managed with [Jujutsu (jj)](https://jj-vcs.github.io/jj/latest/) in colocated mode — both `jj` and `git` work in the same repo. The typical workflow:
+
+```sh
+jj c "my comment"   # commit with message, opens new working copy
+jj bm               # move main bookmark to latest commit
+jj pushm            # push to origin
+```
+
+`jj bm` is always required before `jj pushm` — bookmarks don't move automatically in jj.
 
 ## References
 
