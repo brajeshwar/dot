@@ -21,6 +21,7 @@ echo "Bootstrapping dotfiles..."
 
 mkdir -p "$HOME/.ssh"
 mkdir -p "$HOME/.config/jj"
+mkdir -p "$HOME/.config/ghostty"
 
 link "env/paths.sh"          "$HOME/.paths"
 link "zsh/zprofile"          "$HOME/.zprofile"
@@ -32,6 +33,7 @@ link "git/gitconfig"         "$HOME/.gitconfig"
 link "git/gitignore_global"  "$HOME/.gitignore_global"
 link "ssh/config"            "$HOME/.ssh/config"
 link "jujutsu/config.toml"   "$HOME/.config/jj/config.toml"
+link "ghostty/config"        "$HOME/.config/ghostty/config"
 
 echo "Done."
 echo "Restart your shell or run: exec zsh -l"
