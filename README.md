@@ -41,6 +41,7 @@ Creates all required symlinks in `$HOME`. Safe to re-run — existing non-symlin
 **SSH keys** — run once per machine per key to store the passphrase in macOS Keychain (no more prompts after reboots):
 
 ```sh
+ssh-add ~/.ssh/id_rsa
 ssh-add ~/.ssh/id_ed25519_ONM_MBP2025
 ssh-add ~/.ssh/id_ed25519_laaija
 ssh-add ~/.ssh/id_ed25519_work
