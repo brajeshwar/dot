@@ -1,102 +1,49 @@
 # Dotfiles TODO
 
-A prioritized checklist of fixes based on a critical review of the repo.
-
-Last updated: 2026-03-15
+Last updated: 2026-05-16
 
 ---
 
-## 1. PATH Cleanup
+## Completed — Initial Cleanup (2026-03-15)
 
-- [x] Audit every file that touches `PATH`: `.zshenv`, `.zprofile`, `env.sh`, `.zshrc`, `.bash_profile`, `.bashrc`
-- [x] Remove duplicate `~/.local/bin` additions (was in `.zshenv`, `env.sh`, and `.zprofile`)
-- [x] Remove duplicate `~/_root/tools` additions (was in `.zshenv` and `env.sh`)
-- [x] Consolidate all runtime PATH manipulation into `paths.sh` as the single source of truth
-
----
-
-## 2. `.zshrc` Violations
-
-- [x] Move LM Studio PATH addition out of `.zshrc` → into `paths.sh`
-- [x] Move Obsidian PATH addition out of `.zshrc` → into `paths.sh`
+- [x] Consolidate PATH into `env/paths.sh` as the single source of truth
+- [x] Remove all PATH duplication across `.zshenv`, `.zprofile`, `.zshrc`
+- [x] Move LM Studio and Obsidian PATH out of `.zshrc` → into `paths.sh`
 - [x] Remove `TERM=xterm-256color` override — Ghostty sets its own terminfo
-- [x] Fix OpenClaw completion source: use `$HOME` instead of hardcoded absolute path
+- [x] Rename `env/env.sh` → `env/paths.sh`; update bootstrap.sh and shell files
+- [x] Remove deprecated Homebrew flags from `brew.sh`
+- [x] Update `osascript` to quit "System Settings" (was "System Preferences")
+- [x] Remove `pmset -a sms 0` — irrelevant on SSD Macs
+- [x] Remove `QLEnableTextSelection` — deprecated since Mojave
+- [x] Switch `insteadOf` → `pushInsteadOf` in gitconfig
+- [x] Fix `id_ed25519_laaija` key naming in `ssh/config`
+- [x] Deduplicate vimrc directives (`syntax`, `cursorline`, font)
+- [x] Raise Ghostty `scrollback-limit` to 10000
 
 ---
 
-## 3. NVM Loading Strategy
+## Completed — Public Safety & Local Overrides (2026-05-16)
 
-- [x] Keep lazy-load in `.zprofile`; remove eager-load from `.zshrc`
-- [x] Remove duplicate `NVM_DIR` declaration from `.zprofile` (set in `.zshenv`)
-- [x] Remove duplicate `PIPX_BIN_DIR`/`~/.local/bin` addition from `.zprofile`
-
----
-
-## 4. `.env` File Naming Collision
-
-- [x] Rename `env/env.sh` → `env/paths.sh` to avoid dotenv tool collisions
-- [x] Update `bootstrap.sh` to symlink as `$HOME/.paths` (was `$HOME/.env`)
-- [x] Fix `.zprofile` to source `$HOME/.paths` (was incorrectly sourcing `$HOME/env.sh`)
-- [x] Fix `.bash_profile` to source `$HOME/.paths` (was `$HOME/.env`)
-
----
-
-## 5. Homebrew Script (`brew.sh`)
-
-- [x] Remove deprecated `--with-iri` flag from wget
-- [x] Remove deprecated `--with-override-system-vi` flag from vim
-- [x] Remove deprecated `--with-webp` flag from imagemagick
-- [x] Remove manual `ln -s` for `sha256sum` — coreutils gnubin handles this automatically
+- [x] Move personal SSH host (`github-brajeshwar`) to `~/.ssh/config.local`
+- [x] Add `Include ~/.ssh/config.local` to `ssh/config`
+- [x] Rename `github-wipro` → `github-job94776`, key to `id_ed25519_job94776`
+- [x] Create `ssh/config.local.example` documenting per-device key convention
+- [x] Add `[include]` and `[includeIf]` hooks to `git/gitconfig` for local identity
+- [x] Create `git/gitconfig.local.example`
+- [x] Add `~/.zshrc.local` hook to `zsh/zshrc`; remove openclaw-dench
+- [x] Generalize `HOME` fallback in `zsh/zshenv`
+- [x] Remove personal byline from `vim/vimrc`
+- [x] Generalize screenshots folder path in `macos/defaults.sh`
+- [x] Add `*.local`, `id_*`, `*_rsa`, `*_ed25519` to `git/gitignore_global`
+- [x] Add repo-root `.gitignore` excluding `PUBLIC_RELEASE_TODO.md`
+- [x] Update `test.sh` assertions for new SSH layout
+- [x] Update `README.md` with local override docs and key naming convention
+- [x] Add `setup-work.md` for new work machine onboarding
 
 ---
 
-## 6. macOS Defaults Script
+## Open
 
-- [x] Update `osascript` to quit "System Settings" (was "System Preferences", renamed in Ventura)
-- [x] Remove `pmset -a sms 0` (Sudden Motion Sensor — irrelevant on all modern SSD Macs)
-- [x] Remove `QLEnableTextSelection` — deprecated since Mojave, has no effect
-
----
-
-## 7. Git Config
-
-- [x] Remove `sign` alias — redundant since `gpgsign = true` is already set globally
-- [ ] Consider reviewing `amend` and `c` aliases — both run `git add -A` implicitly
-- [x] Switch `insteadOf` → `pushInsteadOf` so fetch/clone stays HTTPS, only push uses SSH
-
----
-
-## 8. SSH Config
-
-- [x] Update `IdentityFile` reference to `~/.ssh/id_ed25519_laaija` (was `~/.ssh/laaija`)
-- [x] Rename the actual key file: `mv ~/.ssh/laaija ~/.ssh/id_ed25519_laaija`
-
----
-
-## 9. Vimrc
-
-- [x] Replace duplicate `syntax on` + `syntax enable` with a single `syntax enable`
-- [x] Remove duplicate `set cursorline`
-- [x] Collapse per-platform font conditional (all branches were identical `Monaco:h16`)
-- [x] Remove empty Plugins scaffolding section
-
----
-
-## 10. Ghostty Config
-
-- [x] Raise `scrollback-limit` from 999 → 10000 lines
-
----
-
-## 11. Zed Settings
-
-- [x] Remove trailing comma after `file_scan_exclusions` array (invalid JSON)
-- [ ] Confirm `always_allow_tool_actions: true` is intentional
-
----
-
-## 12. Empty Directories
-
-- [x] Add `.gitkeep` to: `claude/`, `config/`, `emacs/`, `jujutsu/`, `sublimetext/`
-
----
+- [ ] Consider `always_allow_tool_actions: true` in `zed/settings.json` — security-relevant default, may want to flip to `false` in the public template
+- [ ] Add CI check (GitHub Actions) to run `sh test.sh` on push
+- [ ] Add a LICENSE file (MIT or 0BSD)

@@ -1,7 +1,5 @@
 # .
 
-https://github.com/brajeshwar/dot
-
 A minimal, layered shell environment — predictable, portable, and resistant to vendor tooling injecting itself into shell config files.
 
 ## Bootstrap
@@ -26,25 +24,60 @@ Creates all required symlinks in `$HOME`. Safe to re-run — existing non-symlin
 
 **`.paths`** (symlinked from `env/paths.sh`) adds login-shell runtimes: bun, deno, Python user base, LM Studio, and any other vendor tooling. POSIX-safe, no shell-specific logic. `~/.local/bin` and `~/_root/tools` are intentionally absent here — they live in `.zshenv` to be available everywhere, not just login shells.
 
-**`.zshrc`** contains no PATH logic. Prompt, shell options, history, completions only.
+**`.zshrc`** contains no PATH logic. Prompt, shell options, history, completions only. Sources `~/.zshrc.local` at the end if it exists.
 
 **`.zprofile`** initializes Homebrew, sources `~/.paths`, and eagerly loads nvm.
 
-## Notes
+## Local overrides
 
-**pipx** — installed via Homebrew; tools land in `~/.local/bin` which is in `.zshenv`. Running `pipx ensurepath` should report nothing to do.
+Three files are loaded automatically if they exist, but are never committed. They hold anything machine-specific or private.
 
-**Personal scripts** — place executables in `~/_root/tools`; available in all shell contexts including SSH and scripts.
+| File | Purpose |
+|---|---|
+| `~/.ssh/config.local` | Device-specific SSH identities (see `ssh/config.local.example`) |
+| `~/.gitconfig.local` | Work identity — name, email, GPG key (see `git/gitconfig.local.example`) |
+| `~/.zshrc.local` | Work env vars, aliases, tool completions |
 
-**nvm** — loaded eagerly at login shell start so globally installed npm tools (e.g. `browser-sync`) are always on PATH without needing to invoke `node` or `npm` first.
+Copy the `.example` files as starting points. These files match the `*.local` pattern in `gitignore_global` and will never be accidentally committed.
 
-**SSH keys** — run once per machine per key to store the passphrase in macOS Keychain (no more prompts after reboots):
+## SSH keys
+
+Each device gets its own key — keys are never shared between machines. This lets you audit and revoke individual device access from GitHub without affecting other devices.
+
+**Key naming convention for personal devices:**
+```
+id_ed25519_<Owner>_<DeviceModel><Year>
+```
+For example: `id_ed25519_ONM_MBP2025`, `id_ed25519_ONM_MBA2023`
+
+Work and job devices use a separate codename scheme defined in `ssh/config.local.example`.
+
+**Generate a key for this device:**
+```sh
+ssh-keygen -t ed25519 -C "you@example.com" -f ~/.ssh/id_ed25519_<Device>
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519_<Device>
+```
+
+Then add the public key (`~/.ssh/id_ed25519_<Device>.pub`) to the relevant GitHub account under Settings → SSH keys.
+
+## Multiple GitHub identities
+
+`ssh/config` defines Host aliases for different identities, each mapped to a specific SSH key. Use the alias instead of `github.com` when cloning to control which identity is used:
 
 ```sh
-ssh-add ~/.ssh/id_rsa
-ssh-add ~/.ssh/id_ed25519_ONM_MBP2025
-ssh-add ~/.ssh/id_ed25519_laaija
-ssh-add ~/.ssh/id_ed25519_work
+git clone git@github-brajeshwar:<user>/<repo>.git
+git clone git@github-laaija:<user>/<repo>.git
+git clone git@github-job94776:<user>/<repo>.git
+```
+
+Personal device identities (`github-brajeshwar`) go in `~/.ssh/config.local` since they reference a device-specific key. See `ssh/config.local.example`.
+
+To automatically apply a work identity to all repos under a folder:
+
+```ini
+# Already wired in git/gitconfig:
+[includeIf "gitdir:~/work/"]
+  path = ~/.gitconfig.local
 ```
 
 ## Testing
@@ -59,7 +92,7 @@ Checks symlinks, PATH hygiene across all shell files, `env/paths.sh` contents, `
 
 ```
 ======================================
-  42 passed  |  0 failed
+  45 passed  |  0 failed
 ======================================
 ```
 
