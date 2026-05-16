@@ -33,3 +33,14 @@ Thumbs.db
 .idea/
 .vscode
 .vagrant/
+
+# Local overrides — never commit these #
+#########################################
+*.local
+.gitconfig.local
+
+# SSH keys — belt-and-braces #
+###############################
+id_*
+*_rsa
+*_ed25519
