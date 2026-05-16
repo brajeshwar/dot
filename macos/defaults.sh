@@ -1,7 +1,7 @@
 # macOS Defaults
 # Edited: Mar 15, 2026
 
-SCREENSHOTS_FOLDER="${HOME}/_/Vault/Screenshots"
+SCREENSHOTS_FOLDER="${HOME}/Pictures/Screenshots"  # adjust to your preferred path
 
 # Topics
 #
