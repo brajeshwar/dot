@@ -1,7 +1,6 @@
 " --------------------------------------
-" Brajeshwar, https://brajeshwar.com
-" Start: Jan 1, 2024
-" Edited Last: Mar 15, 2026
+" vimrc
+" Edited Last: May 16, 2026
 " --------------------------------------
 
 set nocompatible		" Disable compatibility with vi which can cause unexpected issues
