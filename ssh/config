@@ -1,7 +1,8 @@
 # SSH Config
-# To Add to the macOS Keychain
-# $ ssh-add ~/.ssh/id_ed25519_ONM_MBP2025
-# Edited: Apr 19, 2026
+# Edited: May 16, 2026
+#
+# Personal device-specific keys live in ~/.ssh/config.local (not committed).
+# See ssh/config.local.example for the pattern.
 
 # GLOBAL DEFAULTS
 Host *
@@ -14,12 +15,9 @@ Host *
   ControlPath ~/.ssh/cm-%r@%h:%p
   ControlPersist 10m
 
-# Brajeshwar
-Host github-brajeshwar
-  HostName github.com
-  User git
-  IdentityFile ~/.ssh/id_ed25519_ONM_MBP2025
-  IdentitiesOnly yes
+# Device-specific and personal identities — kept off the public repo.
+# Copy ssh/config.local.example to ~/.ssh/config.local and fill in.
+Include ~/.ssh/config.local
 
 # Work
 Host github-work
@@ -35,12 +33,12 @@ Host github-laaija
   IdentityFile ~/.ssh/id_ed25519_laaija
   IdentitiesOnly yes
 
-# Wipro
-Host github-wipro
+# Job 94776
+Host github-job94776
   HostName github.com
   User git
-  IdentityFile ~/.ssh/id_ed25519_wipro
+  IdentityFile ~/.ssh/id_ed25519_job94776
   IdentitiesOnly yes
 
-Host *
-  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+# Host *
+#  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"

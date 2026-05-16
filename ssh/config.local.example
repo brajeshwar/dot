@@ -1,0 +1,23 @@
+# ssh/config.local.example
+#
+# Copy this to ~/.ssh/config.local (never committed).
+# One file per machine — holds device-specific and personal SSH identities.
+#
+# Key naming convention for personal devices:
+#   id_ed25519_<Owner>_<DeviceModel><Year>
+#   e.g. id_ed25519_ONM_MBP2025, id_ed25519_ONM_MBA2023
+#
+# Each device generates its OWN key — keys are never shared across machines.
+# This lets you audit (and revoke) individual device access from GitHub.
+#
+# To generate a key for this device:
+#   ssh-keygen -t ed25519 -C "your@email.com" -f ~/.ssh/id_ed25519_<Device>
+#   ssh-add --apple-use-keychain ~/.ssh/id_ed25519_<Device>
+#   # Then add the public key to GitHub → Settings → SSH keys
+
+# Personal GitHub identity for this device
+Host github-brajeshwar
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_ONM_MBP2025  # replace with this device's key name
+  IdentitiesOnly yes
