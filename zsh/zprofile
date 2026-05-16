@@ -13,9 +13,6 @@ fi
 
 # ---------------------------------
 # nvm (eager load)
+# NVM_DIR is set in .zshenv; just load the script here
 # ---------------------------------
-export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-# Added by Obsidian
-export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
