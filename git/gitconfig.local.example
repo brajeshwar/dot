@@ -1,0 +1,14 @@
+# git/gitconfig.local.example
+#
+# Copy this to ~/.gitconfig.local (never committed).
+# Overrides identity and signing for work or device-specific contexts.
+# Referenced via [include] and [includeIf] in git/gitconfig.
+
+[user]
+    name  = Your Name
+    email = you@work.com
+    signingkey = YOUR_GPG_KEY_FINGERPRINT
+
+# Optional: pin a specific SSH key for git operations on this machine
+# [core]
+#     sshCommand = ssh -i ~/.ssh/id_ed25519_job94776

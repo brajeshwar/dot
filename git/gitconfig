@@ -61,3 +61,17 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+
+# Local identity overrides (work email, work GPG key, etc.)
+# Copy git/gitconfig.local.example to ~/.gitconfig.local and fill in.
+# Applied globally; also auto-applied to any repo under ~/work/.
+[include]
+    path = ~/.gitconfig.local
+[includeIf "gitdir:~/work/"]
+    path = ~/.gitconfig.local
