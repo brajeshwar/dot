@@ -107,8 +107,12 @@ assert_not_contains git/gitconfig "sign  ="            "gitconfig: no redundant 
 printf "\n--- ssh/config\n"
 # -----------------------------------------------------------------------
 
+assert_contains     ssh/config "github-job94776"       "ssh/config: job94776 host present"
+assert_contains     ssh/config "id_ed25519_job94776"   "ssh/config: job94776 key uses obfuscated name"
 assert_contains     ssh/config "id_ed25519_laaija"     "ssh/config: laaija key uses standard naming"
 assert_not_contains ssh/config "/.ssh/laaija"          "ssh/config: no bare laaija key reference"
+assert_not_contains ssh/config "wipro"                 "ssh/config: no employer name in public config"
+assert_contains     ssh/config "config.local"          "ssh/config: Include config.local hook present"
 
 # -----------------------------------------------------------------------
 printf "\n--- vim/vimrc\n"
@@ -139,7 +143,7 @@ printf "\n--- jujutsu/config.toml\n"
 # -----------------------------------------------------------------------
 
 assert_file         jujutsu/config.toml                       "jujutsu/config.toml exists"
-assert_contains     jujutsu/config.toml "brajeshwar@oinam.com" "jujutsu: user email set"
+assert_contains     jujutsu/config.toml "email"                "jujutsu: user email key present"
 assert_contains     jujutsu/config.toml "sign-all = true"      "jujutsu: sign-all enabled"
 assert_contains     jujutsu/config.toml "backend  = \"gpg\""   "jujutsu: GPG signing backend"
 assert_contains     jujutsu/config.toml "editor"               "jujutsu: editor set"
