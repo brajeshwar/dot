@@ -34,6 +34,6 @@ HISTFILE=~/.zsh_history
 autoload -Uz compinit && compinit
 
 # ---------------------------------
-# OpenClaw completion
+# Local overrides (machine/work-specific — not committed)
 # ---------------------------------
-[ -f "$HOME/.openclaw-dench/completions/openclaw.zsh" ] && source "$HOME/.openclaw-dench/completions/openclaw.zsh"
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

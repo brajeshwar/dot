@@ -4,7 +4,7 @@
 # ---------------------------------
 
 # Home directory
-export HOME="${HOME:-/Users/brajeshwar}"
+export HOME="${HOME}"
 
 # Node Version Manager (env only — no sourcing here)
 export NVM_DIR="$HOME/.nvm"
