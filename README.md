@@ -66,7 +66,8 @@ Then add the public key (`~/.ssh/id_ed25519_<Device>.pub`) to the relevant GitHu
 
 ```sh
 git clone git@github-brajeshwar:<user>/<repo>.git
-git clone git@github-laaija:<user>/<repo>.git
+git clone git@github-arin:<user>/<repo>.git
+git clone git@github-kairo:<user>/<repo>.git
 git clone git@github-job94776:<user>/<repo>.git
 ```
 
@@ -110,8 +111,8 @@ jj pushm            # push to origin
 
 ## References
 
-- Awesome Dotfiles — https://project-awesome.org/webpro/awesome-dotfiles
-- dotfiles on GitHub — https://dotfiles.github.io
-- Chezmoi — https://www.chezmoi.io
-- GNU Stow — https://www.gnu.org/software/stow/
-- XDG Base Directory Specification — https://specifications.freedesktop.org/basedir/latest/
+- [Awesome Dotfiles](https://project-awesome.org/webpro/awesome-dotfiles) is a curated list of `dotfiles` resource.
+- [dotfiles.github.io](https://github.com/dotfiles/dotfiles.github.com) is an unofficial guide to doing dotfiles on GitHub.
+- [Chezmoi](https://www.chezmoi.io) manages your dotfiles across multiple diverse machines, securely.
+- [GNU Stow](https://www.gnu.org/software/stow/) is a symlink farm manager which takes distinct packages of software and/or data located in separate directories on the filesystem, and makes them appear to be installed in the same place.
+- [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir/latest/) specify files and file formats, where these files should be looked for by defining one or more base directories relative to which files should be located.

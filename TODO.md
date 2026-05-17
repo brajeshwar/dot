@@ -1,4 +1,4 @@
-# Dotfiles TODO
+# TODO
 
 Last updated: 2026-05-16
 
@@ -35,10 +35,11 @@ Last updated: 2026-05-16
 - [x] Remove personal byline from `vim/vimrc`
 - [x] Generalize screenshots folder path in `macos/defaults.sh`
 - [x] Add `*.local`, `id_*`, `*_rsa`, `*_ed25519` to `git/gitignore_global`
-- [x] Add repo-root `.gitignore` excluding `PUBLIC_RELEASE_TODO.md`
 - [x] Update `test.sh` assertions for new SSH layout
 - [x] Update `README.md` with local override docs and key naming convention
-- [x] Add `setup-work.md` for new work machine onboarding
+- [x] Add `Device Setup.md` for new work machine onboarding
+- [x] Remove laaija SSH identity (moved offline)
+- [x] Replace 1Password SSH agent comment with Bitwarden (`~/.bitwarden-ssh-agent.sock`)
 
 ---
 

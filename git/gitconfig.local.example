@@ -7,8 +7,19 @@
 [user]
     name  = Your Name
     email = you@work.com
-    signingkey = YOUR_GPG_KEY_FINGERPRINT
+    # For SSH signing (recommended for work machines — no GPG setup needed):
+    signingkey = ~/.ssh/id_ed25519_job94776.pub
+    # For GPG signing (personal machines):
+    # signingkey = YOUR_GPG_KEY_FINGERPRINT
 
-# Optional: pin a specific SSH key for git operations on this machine
+# SSH signing — comment this block out if using GPG instead
+[gpg]
+    format = ssh
+
+[gpg "ssh"]
+    # GitHub: add the same key under Settings → SSH keys → Signing keys
+    allowedSignersFile = ~/.ssh/allowed_signers
+
+# Uncomment to pin a specific SSH key for git push on this machine
 # [core]
 #     sshCommand = ssh -i ~/.ssh/id_ed25519_job94776

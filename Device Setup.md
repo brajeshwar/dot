@@ -1,4 +1,4 @@
-# Setting Up on a New Work Machine
+# Device Setup
 
 This guide covers getting the dotfiles running on a work or client machine where you need a separate GitHub identity and SSH key.
 
@@ -20,7 +20,11 @@ ssh-keygen -t ed25519 -C "you@work.com" -f ~/.ssh/id_ed25519_job94776
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519_job94776
 ```
 
-Add `~/.ssh/id_ed25519_job94776.pub` to the relevant GitHub account under Settings → SSH keys.
+Add the public key to the relevant GitHub account in **two places**:
+- Settings → SSH and GPG keys → **Authentication keys** (for push/pull)
+- Settings → SSH and GPG keys → **Signing keys** (for commit verification)
+
+Both entries point to the same `~/.ssh/id_ed25519_job94776.pub` — it's one key serving two purposes.
 
 ## 3. Create ~/.ssh/config.local
 
@@ -44,7 +48,7 @@ Also add your personal device block here if this machine serves both purposes (s
 
 ## 4. Create ~/.gitconfig.local
 
-This sets your work identity for git commits:
+This sets your work identity and enables SSH commit signing — no GPG setup needed.
 
 ```sh
 cp ~/dot/git/gitconfig.local.example ~/.gitconfig.local
@@ -56,10 +60,23 @@ Edit `~/.gitconfig.local`:
 [user]
     name  = Your Name
     email = you@work.com
-    signingkey = YOUR_WORK_GPG_KEY_FINGERPRINT
+    signingkey = ~/.ssh/id_ed25519_job94776.pub
+
+[gpg]
+    format = ssh
+
+[gpg "ssh"]
+    allowedSignersFile = ~/.ssh/allowed_signers
 ```
 
-Git will apply this automatically for all repos under `~/work/` via the `[includeIf]` already wired in `git/gitconfig`.
+Then create the allowed signers file so git can verify your own commits locally:
+
+```sh
+echo "you@work.com namespaces=\"git\" $(cat ~/.ssh/id_ed25519_job94776.pub)" \
+  >> ~/.ssh/allowed_signers
+```
+
+Git will apply this identity automatically for all repos under `~/work/` via the `[includeIf]` already wired in `git/gitconfig`.
 
 ## 5. Create ~/.zshrc.local (optional)
 
