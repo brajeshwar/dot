@@ -47,4 +47,4 @@ Last updated: 2026-05-16
 
 - [ ] Consider `always_allow_tool_actions: true` in `zed/settings.json` — security-relevant default, may want to flip to `false` in the public template
 - [ ] Add CI check (GitHub Actions) to run `sh test.sh` on push
-- [ ] Add a LICENSE file (MIT or 0BSD)
+- [x] Add a LICENSE file (MIT or 0BSD)
