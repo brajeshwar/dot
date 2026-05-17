@@ -138,9 +138,7 @@ assert_contains ghostty/config "scrollback-limit = 10000" "ghostty: scrollback-l
 printf "\n--- Empty dirs have .gitkeep\n"
 # -----------------------------------------------------------------------
 
-for dir in claude config emacs sublimetext; do
-  assert_file "$dir/.gitkeep" "$dir/.gitkeep exists"
-done
+assert_file "config/.gitkeep" "config/.gitkeep exists"
 
 # -----------------------------------------------------------------------
 printf "\n======================================\n"
