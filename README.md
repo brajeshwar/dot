@@ -2,6 +2,8 @@
 
 A minimal, layered shell environment — predictable, portable, and resistant to vendor tooling injecting itself into shell config files.
 
+› https://github.com/brajeshwar/dot
+
 ## Bootstrap
 
 ```sh
@@ -89,25 +91,13 @@ Run after any changes to verify nothing is broken:
 sh test.sh
 ```
 
-Checks symlinks, PATH hygiene across all shell files, `env/paths.sh` contents, `brew.sh` flags, macOS defaults, git/ssh/vim/ghostty/zed config, and placeholder directories. A clean run:
+Checks symlinks, PATH hygiene across all shell files, `env/paths.sh` contents, `brew.sh` flags, macOS defaults, git/ssh/vim/ghostty config, and placeholder directories. A clean run:
 
 ```
 ======================================
   45 passed  |  0 failed
 ======================================
 ```
-
-## Version Control
-
-This repo is managed with [Jujutsu (jj)](https://jj-vcs.github.io/jj/latest/) in colocated mode — both `jj` and `git` work in the same repo. The typical workflow:
-
-```sh
-jj c "my comment"   # commit with message, opens new working copy
-jj bm               # move main bookmark to latest commit
-jj pushm            # push to origin
-```
-
-`jj bm` is always required before `jj pushm` — bookmarks don't move automatically in jj.
 
 ## References
 

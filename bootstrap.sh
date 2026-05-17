@@ -20,7 +20,6 @@ link() {
 echo "Bootstrapping dotfiles..."
 
 mkdir -p "$HOME/.ssh"
-mkdir -p "$HOME/.config/jj"
 mkdir -p "$HOME/.config/ghostty"
 
 link "env/paths.sh"          "$HOME/.paths"
@@ -32,7 +31,6 @@ link "bash/bashrc"           "$HOME/.bashrc"
 link "git/gitconfig"         "$HOME/.gitconfig"
 link "git/gitignore_global"  "$HOME/.gitignore_global"
 link "ssh/config"            "$HOME/.ssh/config"
-link "jujutsu/config.toml"   "$HOME/.config/jj/config.toml"
 link "ghostty/config"        "$HOME/.config/ghostty/config"
 
 echo "Done."

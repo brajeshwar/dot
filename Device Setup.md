@@ -1,6 +1,6 @@
 # Device Setup
 
-This guide covers getting the dotfiles running on a work or client machine where you need a separate GitHub identity and SSH key.
+This guide covers getting the [dotfiles](https://github.com/brajeshwar/dot) running on a work or client machine where you need a separate GitHub identity and SSH key.
 
 ## 1. Clone and bootstrap
 

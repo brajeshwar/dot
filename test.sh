@@ -135,20 +135,6 @@ printf "\n--- ghostty/config\n"
 assert_contains ghostty/config "scrollback-limit = 10000" "ghostty: scrollback-limit is 10000"
 
 # -----------------------------------------------------------------------
-printf "\n--- jujutsu/config.toml\n"
-# -----------------------------------------------------------------------
-
-assert_file         jujutsu/config.toml                       "jujutsu/config.toml exists"
-assert_contains     jujutsu/config.toml "email"                "jujutsu: user email key present"
-assert_contains     jujutsu/config.toml "sign-all = true"      "jujutsu: sign-all enabled"
-assert_contains     jujutsu/config.toml "backend  = \"gpg\""   "jujutsu: GPG signing backend"
-assert_contains     jujutsu/config.toml "editor"               "jujutsu: editor set"
-assert_contains     bootstrap.sh "jujutsu/config.toml"         "bootstrap.sh: links jujutsu config"
-if [ -z "${CI:-}" ]; then
-  assert_symlink    "$HOME/.config/jj/config.toml"             "~/.config/jj/config.toml symlink exists"
-fi
-
-# -----------------------------------------------------------------------
 printf "\n--- Empty dirs have .gitkeep\n"
 # -----------------------------------------------------------------------
 
