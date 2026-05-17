@@ -20,16 +20,20 @@ assert_no_symlink()   { [ ! -L "$1" ]           && ok "$2"  || fail "$2"; }
 assert_file()         { [ -f "$1" ]             && ok "$2"  || fail "$2"; }
 
 # -----------------------------------------------------------------------
-printf "\n--- Symlinks\n"
+printf "\n--- Symlinks (skipped in CI)\n"
 # -----------------------------------------------------------------------
 
-assert_symlink    "$HOME/.paths"      "~/.paths symlink exists"
-assert_no_symlink "$HOME/.env"        "~/.env symlink is gone (old broken link)"
-assert_symlink    "$HOME/.zshrc"      "~/.zshrc symlink exists"
-assert_symlink    "$HOME/.zprofile"   "~/.zprofile symlink exists"
-assert_symlink    "$HOME/.zshenv"     "~/.zshenv symlink exists"
-assert_symlink    "$HOME/.gitconfig"  "~/.gitconfig symlink exists"
-assert_symlink    "$HOME/.ssh/config" "~/.ssh/config symlink exists"
+if [ -z "${CI:-}" ]; then
+  assert_symlink    "$HOME/.paths"      "~/.paths symlink exists"
+  assert_no_symlink "$HOME/.env"        "~/.env symlink is gone (old broken link)"
+  assert_symlink    "$HOME/.zshrc"      "~/.zshrc symlink exists"
+  assert_symlink    "$HOME/.zprofile"   "~/.zprofile symlink exists"
+  assert_symlink    "$HOME/.zshenv"     "~/.zshenv symlink exists"
+  assert_symlink    "$HOME/.gitconfig"  "~/.gitconfig symlink exists"
+  assert_symlink    "$HOME/.ssh/config" "~/.ssh/config symlink exists"
+else
+  printf "  (symlink checks skipped — CI environment)\n"
+fi
 
 # -----------------------------------------------------------------------
 printf "\n--- zshrc: no violations\n"
@@ -109,8 +113,6 @@ printf "\n--- ssh/config\n"
 
 assert_contains     ssh/config "github-job94776"       "ssh/config: job94776 host present"
 assert_contains     ssh/config "id_ed25519_job94776"   "ssh/config: job94776 key uses obfuscated name"
-assert_contains     ssh/config "id_ed25519_laaija"     "ssh/config: laaija key uses standard naming"
-assert_not_contains ssh/config "/.ssh/laaija"          "ssh/config: no bare laaija key reference"
 assert_not_contains ssh/config "wipro"                 "ssh/config: no employer name in public config"
 assert_contains     ssh/config "config.local"          "ssh/config: Include config.local hook present"
 
@@ -133,12 +135,6 @@ printf "\n--- ghostty/config\n"
 assert_contains ghostty/config "scrollback-limit = 10000" "ghostty: scrollback-limit is 10000"
 
 # -----------------------------------------------------------------------
-printf "\n--- zed/settings.json\n"
-# -----------------------------------------------------------------------
-
-assert_not_contains zed/settings.json "  ],"           "zed: no trailing comma after file_scan_exclusions"
-
-# -----------------------------------------------------------------------
 printf "\n--- jujutsu/config.toml\n"
 # -----------------------------------------------------------------------
 
@@ -148,7 +144,9 @@ assert_contains     jujutsu/config.toml "sign-all = true"      "jujutsu: sign-al
 assert_contains     jujutsu/config.toml "backend  = \"gpg\""   "jujutsu: GPG signing backend"
 assert_contains     jujutsu/config.toml "editor"               "jujutsu: editor set"
 assert_contains     bootstrap.sh "jujutsu/config.toml"         "bootstrap.sh: links jujutsu config"
-assert_symlink      "$HOME/.config/jj/config.toml"             "~/.config/jj/config.toml symlink exists"
+if [ -z "${CI:-}" ]; then
+  assert_symlink    "$HOME/.config/jj/config.toml"             "~/.config/jj/config.toml symlink exists"
+fi
 
 # -----------------------------------------------------------------------
 printf "\n--- Empty dirs have .gitkeep\n"

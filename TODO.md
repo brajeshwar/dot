@@ -1,6 +1,6 @@
 # TODO
 
-Last updated: 2026-05-16
+Last updated: 2026-05-17
 
 ---
 
@@ -43,8 +43,15 @@ Last updated: 2026-05-16
 
 ---
 
+## Completed — CI & Cleanup (2026-05-17)
+
+- [x] Add CI check (GitHub Actions) to run `sh test.sh` on push
+- [x] Add a LICENSE file (MIT or 0BSD)
+- [x] Remove `zed/` folder — let users manage their own editor settings
+- [x] Fix `test.sh`: remove stale laaija/zed assertions; guard symlink checks for CI
+
+---
+
 ## Open
 
-- [ ] Consider `always_allow_tool_actions: true` in `zed/settings.json` — security-relevant default, may want to flip to `false` in the public template
-- [ ] Add CI check (GitHub Actions) to run `sh test.sh` on push
-- [x] Add a LICENSE file (MIT or 0BSD)
+- [ ] Consider a `zed/settings.json.example` if teammates ask for a starting point
