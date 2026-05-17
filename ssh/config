@@ -26,13 +26,6 @@ Host github-work
   IdentityFile ~/.ssh/id_ed25519_work
   IdentitiesOnly yes
 
-# Laaija
-Host github-laaija
-  HostName github.com
-  User git
-  IdentityFile ~/.ssh/id_ed25519_laaija
-  IdentitiesOnly yes
-
 # Job 94776
 Host github-job94776
   HostName github.com
@@ -40,5 +33,10 @@ Host github-job94776
   IdentityFile ~/.ssh/id_ed25519_job94776
   IdentitiesOnly yes
 
+# Optional: route all SSH auth through Bitwarden's SSH agent.
+# Enable in Bitwarden desktop: Settings → SSH Agent → Enable SSH Agent
+# This lets Bitwarden unlock and serve your SSH keys, replacing ssh-add prompts.
+# Recommended over 1Password for teams — open source, self-hostable, cross-platform.
+#
 # Host *
-#  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+#   IdentityAgent ~/.bitwarden-ssh-agent.sock
