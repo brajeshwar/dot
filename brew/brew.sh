@@ -41,7 +41,6 @@ brew install gnupg
 # Install more recent versions of some macOS tools.
 brew install vim
 brew install grep
-brew install openssh
 
 # Install other useful binaries.
 brew install git
