@@ -42,6 +42,10 @@ _set_window_title() { print -Pn "\e]2;%~\a" }
 add-zsh-hook precmd _set_window_title
 add-zsh-hook chpwd _set_window_title
 
+# Stop Claude Code from overriding the terminal title with "Claude Code".
+# Undocumented env var — remove if it stops working in a future release.
+export CLAUDE_CODE_DISABLE_TERMINAL_TITLE=1
+
 # ---------------------------------
 # Local overrides (machine/work-specific — not committed)
 # ---------------------------------
