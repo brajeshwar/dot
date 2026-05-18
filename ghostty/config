@@ -6,12 +6,14 @@
 theme = Nord
 
 shell-integration = zsh
+shell-integration-features = no-title
 mouse-hide-while-typing = false
 scrollback-limit = 10000
 
 window-width = 108
 window-height = 36
 window-save-state = always
+tab-inherit-working-directory = true
 
 cursor-style = bar
 cursor-style-blink = true

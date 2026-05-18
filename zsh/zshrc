@@ -34,6 +34,15 @@ HISTFILE=~/.zsh_history
 autoload -Uz compinit && compinit
 
 # ---------------------------------
+# Window title — show project path, not the running command
+# (Ghostty's shell-integration title feature is disabled in ghostty/config)
+# ---------------------------------
+autoload -Uz add-zsh-hook
+_set_window_title() { print -Pn "\e]2;%~\a" }
+add-zsh-hook precmd _set_window_title
+add-zsh-hook chpwd _set_window_title
+
+# ---------------------------------
 # Local overrides (machine/work-specific — not committed)
 # ---------------------------------
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
