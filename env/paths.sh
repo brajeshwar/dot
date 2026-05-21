@@ -13,6 +13,13 @@ PATH="$BUN_INSTALL/bin:$PATH"
 export DENO_INSTALL="$HOME/.deno"
 PATH="$DENO_INSTALL/bin:$PATH"
 
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+
 # Python user binaries (static path)
 PYTHON_USER_BASE="$HOME/Library/Python/3.11"
 PATH="$PYTHON_USER_BASE/bin:$PATH"
