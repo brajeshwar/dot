@@ -1,0 +1,15 @@
+# Repo-level ignores for the dotfiles repo itself.
+#
+# ~/.gitignore_global (git/gitignore_global) covers these globally, but the
+# global excludesfile isn't wired up until bootstrap.sh runs — and this is
+# the repo you clone first on a new device. Ignore OS cruft here too so it
+# never shows up before bootstrap.
+
+# macOS / OS-generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

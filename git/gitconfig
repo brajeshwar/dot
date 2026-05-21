@@ -68,6 +68,12 @@
 	helper =
 	helper = !/opt/homebrew/bin/gh auth git-credential
 
+# SSH signature verification (only consulted when verifying SSH-signed
+# commits/tags). Placed before the includes so ~/.gitconfig.local can
+# override it per-device. Path is tilde-expanded by git.
+[gpg "ssh"]
+    allowedSignersFile = ~/.config/git/allowed_signers
+
 # Local identity overrides (work email, work GPG key, etc.)
 # Copy git/gitconfig.local.example to ~/.gitconfig.local and fill in.
 # Applied globally; also auto-applied to any repo under ~/work/.
