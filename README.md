@@ -32,12 +32,13 @@ Creates all required symlinks in `$HOME`. Safe to re-run — existing non-symlin
 
 ## Local overrides
 
-Three files are loaded automatically if they exist, but are never committed. They hold anything machine-specific or private.
+These files are loaded automatically if they exist, but are never committed. They hold anything machine-specific or private.
 
 | File | Purpose |
 |---|---|
 | `~/.ssh/config.local` | Device-specific SSH identities (see `ssh/config.local.example`) |
-| `~/.gitconfig.local` | Work identity — name, email, GPG key (see `git/gitconfig.local.example`) |
+| `~/.gitconfig.local` | Machine-level overrides: transport, signing, credential helpers (see `git/gitconfig.local.example`) |
+| `~/.gitconfig.work` | Work-repo overrides: identity and credentials for work GitHub account (see `git/gitconfig.work.example`) |
 | `~/.zshrc.local` | Work env vars, aliases, tool completions |
 
 Copy the `.example` files as starting points. These files match the `*.local` pattern in `gitignore_global` and will never be accidentally committed.
@@ -75,13 +76,15 @@ git clone git@github-job94776:<user>/<repo>.git
 
 Personal device identities (`github-brajeshwar`) go in `~/.ssh/config.local` since they reference a device-specific key. See `ssh/config.local.example`.
 
-To automatically apply a work identity to all repos under a folder:
+Work identity and credentials are automatically applied to all repos under `~/dev/` via `~/.gitconfig.work`:
 
 ```ini
 # Already wired in git/gitconfig:
-[includeIf "gitdir:~/work/"]
-  path = ~/.gitconfig.local
+[includeIf "gitdir:~/dev/"]
+  path = ~/.gitconfig.work
 ```
+
+Personal repos go anywhere outside `~/dev/` — they pick up the global identity. See `Device Setup.md` for the full setup guide, including HTTPS-only machines where SSH is blocked.
 
 ## Testing
 
