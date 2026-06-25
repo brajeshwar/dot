@@ -1,0 +1,29 @@
+# git/gitconfig.work.example
+#
+# Copy to ~/.gitconfig.work — never committed.
+# Applied automatically to any repo under ~/dev/ via [includeIf] in gitconfig.
+# Overrides identity and credentials for the work GitHub account.
+
+[user]
+    name  = Your Name
+    email = you@employer.com
+    # Uncomment and fill in if your employer requires signed commits:
+    # signingkey = ~/.ssh/id_ed25519_work.pub   (SSH signing)
+    # signingkey = YOUR_WORK_GPG_FINGERPRINT     (GPG signing)
+
+# Override credential helper for work repos.
+# helper = (empty first line) clears the global gh auth git-credential chain.
+# username hint tells osxkeychain which Keychain entry to retrieve.
+[credential "https://github.com"]
+    helper =
+    helper = osxkeychain
+    username = <work-github-username>
+
+[credential "https://gist.github.com"]
+    helper =
+    helper = osxkeychain
+    username = <work-github-username>
+
+# If your employer uses GitHub Enterprise Server at a custom domain,
+# replace "https://github.com" above with that host (e.g. https://github.corp.com)
+# and store credentials against that hostname instead.

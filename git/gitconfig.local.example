@@ -1,25 +1,53 @@
 # git/gitconfig.local.example
 #
-# Copy this to ~/.gitconfig.local (never committed).
-# Overrides identity and signing for work or device-specific contexts.
-# Referenced via [include] and [includeIf] in git/gitconfig.
+# Copy to ~/.gitconfig.local — never committed.
+# Machine-level overrides: transport, signing, credential helpers.
+# Included globally by git/gitconfig [include].
+#
+# Pick the block that matches your machine type and fill in.
 
-[user]
-    name  = Your Name
-    email = you@work.com
-    # For SSH signing (recommended for work machines — no GPG setup needed):
-    signingkey = ~/.ssh/id_ed25519_job94776.pub
-    # For GPG signing (personal machines):
-    # signingkey = YOUR_GPG_KEY_FINGERPRINT
+# ─── PERSONAL MACHINE (SSH available) ──────────────────────────────────────
+# Rewrite HTTPS remote URLs to SSH on push.
+# Required because pushInsteadOf is NOT in the global gitconfig.
+#
+# [url "git@github.com:"]
+#     pushInsteadOf = https://github.com/
 
-# SSH signing — comment this block out if using GPG instead
-[gpg]
-    format = ssh
-
-[gpg "ssh"]
-    # GitHub: add the same key under Settings → SSH keys → Signing keys
-    allowedSignersFile = ~/.ssh/allowed_signers
-
-# Uncomment to pin a specific SSH key for git push on this machine
-# [core]
-#     sshCommand = ssh -i ~/.ssh/id_ed25519_job94776
+# ─── OFFICE MACHINE (SSH blocked, HTTPS only) ───────────────────────────────
+# SSH is blocked by the corporate firewall. All GitHub operations use HTTPS.
+# Two accounts on github.com: personal and work (separate GitHub usernames).
+#
+# 1. Rewrite any SSH remote URLs to HTTPS so existing SSH-URL clones work.
+#    (Repos cloned with git@github.com:… will transparently use HTTPS.)
+#
+# [url "https://github.com/"]
+#     insteadOf = git@github.com:
+#
+# 2. Use raw osxkeychain with PATs — bypasses gh auth git-credential,
+#    which only knows about one account.
+#    username here is the DEFAULT for personal repos (outside ~/dev/).
+#    Work repos override this via ~/.gitconfig.work (see that example).
+#
+# [credential "https://github.com"]
+#     helper =
+#     helper = osxkeychain
+#     username = brajeshwar
+#
+# [credential "https://gist.github.com"]
+#     helper =
+#     helper = osxkeychain
+#     username = brajeshwar
+#
+# 3. Store both PATs once via git credential approve (run in Terminal):
+#
+#    printf 'protocol=https\nhost=github.com\nusername=brajeshwar\npassword=<PERSONAL_PAT>\n' \
+#      | git credential approve
+#
+#    printf 'protocol=https\nhost=github.com\nusername=<WORK_GITHUB_USERNAME>\npassword=<WORK_PAT>\n' \
+#      | git credential approve
+#
+#    macOS Keychain stores two separate entries (same host, different accounts).
+#    The username hint in [credential] sections selects the right one per context.
+#
+# 4. Work-repo identity and work credential → see git/gitconfig.work.example.
+#    That file is auto-applied to ~/dev/ repos via [includeIf] in gitconfig.

@@ -44,3 +44,4 @@ Thumbs.db
 id_*
 *_rsa
 *_ed25519
+**/.claude/settings.local.json

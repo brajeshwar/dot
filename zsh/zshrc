@@ -50,3 +50,9 @@ export CLAUDE_CODE_DISABLE_TERMINAL_TITLE=1
 # Local overrides (machine/work-specific — not committed)
 # ---------------------------------
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# >>> grok installer >>>
+export PATH="$HOME/.grok/bin:$PATH"
+fpath=(~/.grok/completions/zsh $fpath)
+autoload -Uz compinit && compinit -C
+# <<< grok installer <<<

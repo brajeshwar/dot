@@ -1,5 +1,5 @@
 # Git Config
-# Edited: Mar 15, 2026
+# Edited: Jun 25, 2026
 
 [user]
     name = Brajeshwar Oinam
@@ -27,8 +27,9 @@
 [grep]
     lineNumber = true
 
-[url "git@github.com:"]
-    pushInsteadOf = https://github.com/
+# pushInsteadOf lives in ~/.gitconfig.local, not here.
+# Personal machines: add [url "git@github.com:"] pushInsteadOf = https://github.com/
+# Office/SSH-blocked machines: omit it entirely and use HTTPS throughout.
 
 [alias]
     amend = !git add -A && git commit --amend --no-edit
@@ -74,10 +75,13 @@
 [gpg "ssh"]
     allowedSignersFile = ~/.config/git/allowed_signers
 
-# Local identity overrides (work email, work GPG key, etc.)
-# Copy git/gitconfig.local.example to ~/.gitconfig.local and fill in.
-# Applied globally; also auto-applied to any repo under ~/work/.
+# Machine-level overrides: SSH vs HTTPS, signing key, credential helpers.
+# Copy git/gitconfig.local.example → ~/.gitconfig.local (never committed).
 [include]
     path = ~/.gitconfig.local
-[includeIf "gitdir:~/work/"]
-    path = ~/.gitconfig.local
+
+# Work-repo overrides: identity and credentials for work GitHub account.
+# Copy git/gitconfig.work.example → ~/.gitconfig.work (never committed).
+# Applied to any repo cloned under ~/dev/.
+[includeIf "gitdir:~/dev/"]
+    path = ~/.gitconfig.work
