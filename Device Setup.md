@@ -192,14 +192,17 @@ Fill in your work identity, signing key, and work credentials:
 [gpg "ssh"]
     allowedSignersFile = ~/.ssh/allowed_signers
 
+# Work account on a SAML-SSO org: use the gh CLI helper, NOT a Keychain PAT.
+# A Keychain PAT must be SSO-authorized or pushes 403 ("write access not granted"),
+# even though read/clone works. gh handles the SSO authorization for you.
 [credential "https://github.com"]
     helper =
-    helper = osxkeychain
+    helper = !gh auth git-credential
     username = <work-github-username>
 
 [credential "https://gist.github.com"]
     helper =
-    helper = osxkeychain
+    helper = !gh auth git-credential
     username = <work-github-username>
 ```
 
@@ -210,17 +213,30 @@ echo "you@work.com namespaces=\"git\" $(cat ~/.ssh/id_ed25519_job94776.pub)" \
   >> ~/.ssh/allowed_signers
 ```
 
-### 6B. Store both PATs in the macOS Keychain
+### 6B. Personal → Keychain PAT; work → gh CLI (handles SSO)
 
-macOS Keychain stores two separate entries for `github.com` — one per username. The `username =` hint in the gitconfig sections picks the right one automatically.
+**Personal account** — store the PAT in the Keychain:
 
 ```sh
 printf 'protocol=https\nhost=github.com\nusername=<personal-github-username>\npassword=<PERSONAL_PAT>\n' \
   | git credential approve
-
-printf 'protocol=https\nhost=github.com\nusername=<work-github-username>\npassword=<WORK_PAT>\n' \
-  | git credential approve
 ```
+
+**Work account** — sign in with gh, which does the SAML SSO authorization a raw PAT doesn't:
+
+```sh
+gh auth login  --hostname github.com --git-protocol https   # choose the WORK account
+gh auth refresh -h github.com -s repo                        # authorize the token for the work org's SSO
+```
+
+`~/.gitconfig.work` points `~/dev/` repos at `!gh auth git-credential`, so work pushes
+use this gh token automatically — no per-repo workaround. (Prefer a PAT for work too?
+Store it like the personal one above, then authorize it: token page → Configure SSO → Authorize.)
+
+> **Why not just a work PAT in the Keychain?** On SAML-SSO orgs a valid-looking PAT
+> still 403s on push until it's SSO-authorized. The classic symptom: **clone/read works,
+> push fails** with `Write access to repository not granted`. gh keeps this authorized
+> for you, so it's the lower-maintenance default for work repos.
 
 ### 7B. Check for conflicting system gitconfig
 
@@ -254,6 +270,30 @@ If you have an existing repo cloned with an SSH remote URL, update it:
 
 ```sh
 git remote set-url origin https://github.com/OWNER/REPO.git
+```
+
+---
+
+## Troubleshooting
+
+**Push fails `403 Write access to repository not granted` (but clone/read works).**
+The work token isn't SSO-authorized for the org — the single most common cause on
+corporate machines.
+- gh: `gh auth status`, then `gh auth refresh -h github.com -s repo` (re-authorize SSO).
+- PAT in Keychain: GitHub → token → **Configure SSO → Authorize** for the org.
+
+**Push uses the wrong account / prompts unexpectedly.** Check which credential a repo
+resolves to:
+```sh
+cd <repo>
+git config --get-all credential.https://github.com.helper   # work repos (~/dev/) should list: !gh auth git-credential
+git config --get credential.https://github.com.username     # should be the work username under ~/dev/
+```
+Repos only get the work identity when cloned **under `~/dev/`** (the `includeIf` trigger).
+
+**Verify a push works without changing anything:**
+```sh
+git push --dry-run origin <branch>   # authenticates against the remote, updates nothing
 ```
 
 ---

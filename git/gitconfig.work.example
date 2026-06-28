@@ -11,18 +11,35 @@
     # signingkey = ~/.ssh/id_ed25519_work.pub   (SSH signing)
     # signingkey = YOUR_WORK_GPG_FINGERPRINT     (GPG signing)
 
-# Override credential helper for work repos.
-# helper = (empty first line) clears the global gh auth git-credential chain.
-# username hint tells osxkeychain which Keychain entry to retrieve.
+# Credentials for the work GitHub account.
+#
+# IMPORTANT — SAML SSO orgs: many employers enforce SAML SSO, where a classic PAT
+# stored in the Keychain is NOT enough. The token must also be *SSO-authorized* for
+# the org, or pushes fail with "Write access to repository not granted" (403) even
+# though the token looks valid and read/clone works fine.
+#
+# Robust, low-maintenance fix: let the GitHub CLI (gh) serve the token. It handles
+# login + SSO authorization, and `gh auth refresh` re-authorizes when it lapses.
+#   helper =                          -> (empty) clears inherited helpers (osxkeychain)
+#   helper = !gh auth git-credential  -> gh supplies the work token for github.com
+# Prereq: `gh auth login` as the work account, authorized for the org
+#   (gh prompts during login, or: gh auth refresh -h github.com -s repo).
+# If git can't find gh on PATH, use the absolute path (Apple Silicon:
+#   /opt/homebrew/bin/gh ; Intel: /usr/local/bin/gh).
 [credential "https://github.com"]
     helper =
-    helper = osxkeychain
+    helper = !gh auth git-credential
     username = <work-github-username>
 
 [credential "https://gist.github.com"]
     helper =
-    helper = osxkeychain
+    helper = !gh auth git-credential
     username = <work-github-username>
+
+# Alternative without gh: store an SSO-AUTHORIZED PAT in the Keychain instead —
+#   helper =
+#   helper = osxkeychain
+# then authorize it on the token page -> Configure SSO -> Authorize for the org.
 
 # If your employer uses GitHub Enterprise Server at a custom domain,
 # replace "https://github.com" above with that host (e.g. https://github.corp.com)
