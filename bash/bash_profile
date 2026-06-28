@@ -15,3 +15,10 @@ export GPG_TTY=$(tty)
 # the shell-integration block in ~/.bashrc is reached (e.g. in tmux).
 if [ -f "$HOME/.bashrc" ]; then . "$HOME/.bashrc"; fi
 # <<< otty bash-profile shim >>>
+
+# >>> open-knowledge cli >>>
+# ! Contents within this block are managed by Open Knowledge. Do not edit.
+# ! Delete this whole block to opt out — Open Knowledge will not re-add it.
+[ -f "$HOME/.ok/env.sh" ] && . "$HOME/.ok/env.sh"
+# <<< open-knowledge cli <<<
+

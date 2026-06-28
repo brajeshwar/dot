@@ -16,3 +16,6 @@ fi
 # NVM_DIR is set in .zshenv; just load the script here
 # ---------------------------------
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# Hermes Agent — ensure ~/.local/bin is on PATH
+export PATH="$HOME/.local/bin:$PATH"
