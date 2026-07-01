@@ -18,6 +18,14 @@ if command -v rbenv >/dev/null; then
 fi
 
 # ---------------------------------
+# mise (interactive only — dir-based env switching hook)
+# Shims for non-interactive/GUI contexts are on PATH via env/paths.sh
+# ---------------------------------
+if command -v mise >/dev/null; then
+  eval "$(mise activate zsh)"
+fi
+
+# ---------------------------------
 # Shell behavior
 # ---------------------------------
 setopt autocd

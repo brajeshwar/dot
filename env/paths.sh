@@ -30,4 +30,8 @@ PATH="$HOME/.lmstudio/bin:$PATH"
 # Obsidian (CLI access to app binary)
 PATH="/Applications/Obsidian.app/Contents/MacOS:$PATH"
 
+# mise shims — non-interactive/GUI contexts (Zed terminal, IDEs, scripts)
+# that never source zshrc's `mise activate` hook still get pinned versions.
+PATH="$HOME/.local/share/mise/shims:$PATH"
+
 export PATH
