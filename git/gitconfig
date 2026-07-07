@@ -2,8 +2,8 @@
 # Edited: Jun 25, 2026
 
 [user]
-    name = Brajeshwar Oinam
-    email = brajeshwar@oinam.com
+	name = Brajeshwar Oinam
+	email = brajeshwar@oinam.com
     signingkey = 47EE96D63DFDA9372079337A9C9CD08302E7C29F
 
 [gpg]
