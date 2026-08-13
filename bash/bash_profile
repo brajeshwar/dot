@@ -10,10 +10,8 @@ fi
 # GPG
 export GPG_TTY=$(tty)
 
-# >>> otty bash-profile shim >>>
-# Otty: login bash reads the profile, not ~/.bashrc — pull it in so
-# the shell-integration block in ~/.bashrc is reached (e.g. in tmux).
+# Login bash reads this file, not ~/.bashrc — pull it in so interactive
+# login shells still get completion and the rest of the interactive setup.
 if [ -f "$HOME/.bashrc" ]; then . "$HOME/.bashrc"; fi
-# <<< otty bash-profile shim >>>
 
 . "$HOME/.cargo/env"
