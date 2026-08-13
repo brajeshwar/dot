@@ -1,9 +1,10 @@
 # Ghostty Config
-# Edited: Mar 15, 2026
+# Edited: Aug 13, 2026
 #
 # Available Themes
 # $ ghostty +list-themes
-theme = Nord
+# theme = Nord
+theme = Flexoki Dark
 
 shell-integration = zsh
 shell-integration-features = no-title
@@ -18,7 +19,7 @@ tab-inherit-working-directory = true
 cursor-style = bar
 cursor-style-blink = true
 
-font-family = Monaco
+font-family = JetBrains Mono
 font-size = 16
 keybind = shift+enter=text:\x1b\r
 
