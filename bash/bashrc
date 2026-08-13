@@ -19,8 +19,3 @@ if [ -n "$OTTY_SHELL_INTEGRATION" ] && [ -r "$OTTY_SHELL_INTEGRATION/otty-integr
   . "$OTTY_SHELL_INTEGRATION/otty-integration.bash"
 fi
 # <<< otty shell integration <<<
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/br20697471/.lmstudio/bin"
-# End of LM Studio CLI section
-

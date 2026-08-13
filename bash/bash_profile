@@ -17,8 +17,3 @@ if [ -f "$HOME/.bashrc" ]; then . "$HOME/.bashrc"; fi
 # <<< otty bash-profile shim >>>
 
 . "$HOME/.cargo/env"
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/br20697471/.lmstudio/bin"
-# End of LM Studio CLI section
-
