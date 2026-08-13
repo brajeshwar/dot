@@ -20,3 +20,4 @@ if [ -d "$HOME/_root/tools" ]; then
 fi
 
 export PATH
+. "$HOME/.cargo/env"
