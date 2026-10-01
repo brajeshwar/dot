@@ -34,4 +34,8 @@ PATH="/Applications/Obsidian.app/Contents/MacOS:$PATH"
 # that never source zshrc's `mise activate` hook still get pinned versions.
 PATH="$HOME/.local/share/mise/shims:$PATH"
 
+# Android SDK platform-tools (adb) — scrcpy finds adb on PATH
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+PATH="$ANDROID_HOME/platform-tools:$PATH"
+
 export PATH
