@@ -16,8 +16,10 @@
 #   # Then add the public key to GitHub → Settings → SSH keys
 #
 # Work, job, and client identities use a codename instead of the company name:
-#   key   id_ed25519_<codename>
+#   key   id_ed25519_<codename>_<YYYYMON>
 #   host  github-<codename>
+# One key per identity per device — never reuse one key across accounts:
+# signing keys are public, so a shared key links the identities.
 # The codename never appears in the public repo — only here and in
 # ~/.config/git/identities/<codename>.gitconfig.
 # On HTTPS-only machines these Host blocks are unused; the key still signs
@@ -34,5 +36,5 @@ Host github-brajeshwar
 # Host github-<codename>
 #   HostName github.com
 #   User git
-#   IdentityFile ~/.ssh/id_ed25519_<codename>
+#   IdentityFile ~/.ssh/id_ed25519_<codename>_<YYYYMON>
 #   IdentitiesOnly yes

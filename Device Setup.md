@@ -24,18 +24,18 @@ chmod +x bootstrap.sh
 
 ### 2A. Generate a device-specific SSH key
 
-Work and job devices use a codename scheme to avoid identifying the employer in public configs. Pick a codename for this identity (for example `job12345` or a client nickname) and use it for the key, the SSH host alias, and the identity file. The codename itself never goes into this repo.
+Work and job devices use a codename scheme to avoid identifying the employer in public configs. Pick a codename for this identity (for example `job12345` or a client nickname) and use it for the key, the SSH host alias, and the identity file. The codename itself never goes into this repo. Keys are named `id_ed25519_<codename>_<YYYYMON>` — identity plus the month the key was made on this device — with the same string as the key comment, so the public key carries no email.
 
 ```sh
-ssh-keygen -t ed25519 -C "you@work.com" -f ~/.ssh/id_ed25519_<codename>
-ssh-add --apple-use-keychain ~/.ssh/id_ed25519_<codename>
+ssh-keygen -t ed25519 -C "<codename>_<YYYYMON>" -f ~/.ssh/id_ed25519_<codename>_<YYYYMON>
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519_<codename>_<YYYYMON>
 ```
 
 Add the public key to the relevant GitHub account in **two places**:
 - Settings → SSH and GPG keys → **Authentication keys** (for push/pull)
 - Settings → SSH and GPG keys → **Signing keys** (for commit verification)
 
-Both entries use the same `~/.ssh/id_ed25519_<codename>.pub` — one key, two purposes.
+Both entries use the same `~/.ssh/id_ed25519_<codename>_<YYYYMON>.pub` — one key, two purposes.
 
 ### 3A. Create ~/.ssh/config.local
 
@@ -49,7 +49,7 @@ Add the work identity block:
 Host github-<codename>
   HostName github.com
   User git
-  IdentityFile ~/.ssh/id_ed25519_<codename>
+  IdentityFile ~/.ssh/id_ed25519_<codename>_<YYYYMON>
   IdentitiesOnly yes
 ```
 
@@ -86,7 +86,7 @@ Fill in every `<…>`. The template is self-contained — name, email, signing k
 [user]
     name  = Your Name
     email = you@work.com
-    signingkey = ~/.ssh/id_ed25519_<codename>.pub
+    signingkey = ~/.ssh/id_ed25519_<codename>_<YYYYMON>.pub
 
 [gpg]
     format = ssh
@@ -106,7 +106,7 @@ Fill in every `<…>`. The template is self-contained — name, email, signing k
 Create the allowed signers file so git can verify your own commits locally:
 
 ```sh
-echo "you@work.com namespaces=\"git\" $(cat ~/.ssh/id_ed25519_<codename>.pub)" \
+echo "you@work.com namespaces=\"git\" $(cat ~/.ssh/id_ed25519_<codename>_<YYYYMON>.pub)" \
   >> ~/.ssh/allowed_signers
 ```
 
@@ -130,7 +130,7 @@ SSH is blocked by the corporate firewall. All GitHub operations use HTTPS. You w
 SSH keys can still be used to *sign commits* locally — no network connection needed. Generate one even though it won't be used for transport.
 
 ```sh
-ssh-keygen -t ed25519 -C "you@work.com" -f ~/.ssh/id_ed25519_<codename>
+ssh-keygen -t ed25519 -C "<codename>_<YYYYMON>" -f ~/.ssh/id_ed25519_<codename>_<YYYYMON>
 ```
 
 Add the public key to your **work** GitHub account under:
@@ -203,7 +203,7 @@ Fill in your work identity, signing key, and work credentials:
 [user]
     name  = Your Name
     email = you@work.com
-    signingkey = ~/.ssh/id_ed25519_<codename>.pub
+    signingkey = ~/.ssh/id_ed25519_<codename>_<YYYYMON>.pub
 
 [gpg]
     format = ssh
@@ -234,7 +234,7 @@ Fill in your work identity, signing key, and work credentials:
 Create the allowed signers file:
 
 ```sh
-echo "you@work.com namespaces=\"git\" $(cat ~/.ssh/id_ed25519_<codename>.pub)" \
+echo "you@work.com namespaces=\"git\" $(cat ~/.ssh/id_ed25519_<codename>_<YYYYMON>.pub)" \
   >> ~/.ssh/allowed_signers
 ```
 
@@ -307,12 +307,14 @@ A client or a second job on the same machine. Nothing in this repo changes — e
 
 1. **Pick a codename** — for the key, the identity file, and the SSH alias. Never the client's name.
 
+   Each identity gets its **own** key, even on the same device. Signing keys are public on GitHub and every signature carries its key, so one key shared across accounts links them for anyone who compares. It also ties the client's key rotation to your work signing.
+
 2. **Signing key**, added to the client account under Settings → SSH and GPG keys → **Signing keys** (and Authentication keys on SSH machines):
 
    ```sh
-   ssh-keygen -t ed25519 -C "<client-email>" -f ~/.ssh/id_ed25519_<codename>
-   ssh-add --apple-use-keychain ~/.ssh/id_ed25519_<codename>
-   echo "<client-email> namespaces=\"git\" $(cat ~/.ssh/id_ed25519_<codename>.pub)" >> ~/.ssh/allowed_signers
+   ssh-keygen -t ed25519 -C "<codename>_<YYYYMON>" -f ~/.ssh/id_ed25519_<codename>_<YYYYMON>
+   ssh-add --apple-use-keychain ~/.ssh/id_ed25519_<codename>_<YYYYMON>
+   echo "<client-email> namespaces=\"git\" $(cat ~/.ssh/id_ed25519_<codename>_<YYYYMON>.pub)" >> ~/.ssh/allowed_signers
    ```
 
 3. **Identity file** — copy the template and fill every `<…>`, using the Keychain PAT helper (option A):

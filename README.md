@@ -53,7 +53,7 @@ id_ed25519_<Owner>_<DeviceModel><Year>
 ```
 For example: `id_ed25519_ONM_MBP2025`, `id_ed25519_ONM_MBA2023`
 
-Work and job devices use a separate codename scheme defined in `ssh/config.local.example`.
+Work, job, and client identities use a codename scheme instead — `id_ed25519_<codename>_<YYYYMON>`, one key per identity per device, never shared across accounts — defined in `ssh/config.local.example`.
 
 **Generate a key for this device:**
 ```sh

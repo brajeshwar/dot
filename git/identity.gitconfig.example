@@ -15,7 +15,7 @@
 [user]
     name  = Your Name
     email = <identity-email>
-    signingkey = ~/.ssh/id_ed25519_<codename>.pub
+    signingkey = ~/.ssh/id_ed25519_<codename>_<YYYYMON>.pub
 
 [gpg]
     format = ssh
