@@ -353,6 +353,14 @@ A client or a second job on the same machine. Nothing in this repo changes — e
    GH_CONFIG_DIR = "{{env.HOME}}/.config/gh-<codename>"
    ```
 
+   mise only switches env in interactive shells. For Claude Code sessions in the repo, set the same variable in `<repo>/.claude/settings.local.json` (also gitignored globally) — use an absolute path, since `~` is not expanded:
+
+   ```json
+   { "env": { "GH_CONFIG_DIR": "/Users/<you>/.config/gh-<codename>" } }
+   ```
+
+   When `gh auth login` asks "Authenticate Git with your GitHub credentials?", answer **No** — yes writes a credential helper into `~/.gitconfig`, which is this repo. Git keeps using the Keychain PAT; gh is only for API work (PRs, issues, Actions).
+
 7. **SSH machines only** — add a `Host github-<codename>` block to `~/.ssh/config.local` (see `ssh/config.local.example`), and an SSH URL match (`git@github.com:<client-org>/**`) to the routing rule.
 
 8. **Verify** inside a client repo:
