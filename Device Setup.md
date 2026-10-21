@@ -337,6 +337,8 @@ A client or a second job on the same machine. Nothing in this repo changes — e
        path = ~/.config/git/identities/<codename>.gitconfig
    ```
 
+   The match is case-sensitive but GitHub org names are not — add a second block with the org in lowercase, so a repo cloned either way routes correctly.
+
    The identity follows the remote, so a repo with no remote yet commits as work. Clone client repos, or add the remote before the first commit. If the client's code is on another host (GitHub Enterprise, GitLab, Azure DevOps), match that host's URL instead; credentials then separate by host on their own.
 
 6. **gh CLI, if needed.** `gh` serves its *active* account to git, so `gh auth switch` would change which account work pushes use. Give the client a separate gh config instead, scoped to its repos with mise:
