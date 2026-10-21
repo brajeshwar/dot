@@ -24,18 +24,18 @@ chmod +x bootstrap.sh
 
 ### 2A. Generate a device-specific SSH key
 
-Work and job devices use a codename scheme to avoid identifying the employer in public configs. Pick a codename for this job identity (e.g., `job94776`).
+Work and job devices use a codename scheme to avoid identifying the employer in public configs. Pick a codename for this identity (for example `job12345` or a client nickname) and use it for the key, the SSH host alias, and the identity file. The codename itself never goes into this repo.
 
 ```sh
-ssh-keygen -t ed25519 -C "you@work.com" -f ~/.ssh/id_ed25519_job94776
-ssh-add --apple-use-keychain ~/.ssh/id_ed25519_job94776
+ssh-keygen -t ed25519 -C "you@work.com" -f ~/.ssh/id_ed25519_<codename>
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519_<codename>
 ```
 
 Add the public key to the relevant GitHub account in **two places**:
 - Settings → SSH and GPG keys → **Authentication keys** (for push/pull)
 - Settings → SSH and GPG keys → **Signing keys** (for commit verification)
 
-Both entries use the same `~/.ssh/id_ed25519_job94776.pub` — one key, two purposes.
+Both entries use the same `~/.ssh/id_ed25519_<codename>.pub` — one key, two purposes.
 
 ### 3A. Create ~/.ssh/config.local
 
@@ -46,10 +46,10 @@ cp ~/dot/ssh/config.local.example ~/.ssh/config.local
 Add the work identity block:
 
 ```sshconfig
-Host github-job94776
+Host github-<codename>
   HostName github.com
   User git
-  IdentityFile ~/.ssh/id_ed25519_job94776
+  IdentityFile ~/.ssh/id_ed25519_<codename>
   IdentitiesOnly yes
 ```
 
@@ -66,25 +66,36 @@ Uncomment and fill in the personal machine block (SSH push rewrite):
     pushInsteadOf = https://github.com/
 ```
 
-### 5A. Create ~/.gitconfig.work
+Then add the routing block for the work identity at the end of the file (section 5 of the example):
 
-```sh
-cp ~/dot/git/gitconfig.work.example ~/.gitconfig.work
+```ini
+[includeIf "gitdir:~/dev/"]
+    path = ~/.config/git/identities/<codename>.gitconfig
 ```
 
-Fill in your work identity and credentials:
+### 5A. Create the work identity file
+
+```sh
+mkdir -p ~/.config/git/identities && chmod 700 ~/.config/git/identities
+cp ~/dot/git/identity.gitconfig.example ~/.config/git/identities/<codename>.gitconfig
+```
+
+Fill in every `<…>`. The template is self-contained — name, email, signing key, `commit.gpgsign`, and credentials — so no value leaks in from another identity:
 
 ```ini
 [user]
     name  = Your Name
     email = you@work.com
-    signingkey = ~/.ssh/id_ed25519_job94776.pub
+    signingkey = ~/.ssh/id_ed25519_<codename>.pub
 
 [gpg]
     format = ssh
 
 [gpg "ssh"]
     allowedSignersFile = ~/.ssh/allowed_signers
+
+[commit]
+    gpgsign = true
 
 [credential "https://github.com"]
     helper =
@@ -95,18 +106,18 @@ Fill in your work identity and credentials:
 Create the allowed signers file so git can verify your own commits locally:
 
 ```sh
-echo "you@work.com namespaces=\"git\" $(cat ~/.ssh/id_ed25519_job94776.pub)" \
+echo "you@work.com namespaces=\"git\" $(cat ~/.ssh/id_ed25519_<codename>.pub)" \
   >> ~/.ssh/allowed_signers
 ```
 
 ### 6A. Clone work repos
 
 ```sh
-git clone git@github-job94776:<org>/<repo>.git ~/dev/<repo>
+git clone git@github-<codename>:<org>/<repo>.git ~/dev/<repo>
 ```
 
-Repos under `~/dev/` automatically get the work identity from `~/.gitconfig.work`.
-Personal repos go anywhere outside `~/dev/`.
+Repos under `~/dev/` automatically get the work identity through the routing table in `~/.gitconfig.local`.
+Personal repos go anywhere outside `~/dev/`. For a client or second job, see [Add another identity](#add-another-identity).
 
 ---
 
@@ -119,7 +130,7 @@ SSH is blocked by the corporate firewall. All GitHub operations use HTTPS. You w
 SSH keys can still be used to *sign commits* locally — no network connection needed. Generate one even though it won't be used for transport.
 
 ```sh
-ssh-keygen -t ed25519 -C "you@work.com" -f ~/.ssh/id_ed25519_job94776
+ssh-keygen -t ed25519 -C "you@work.com" -f ~/.ssh/id_ed25519_<codename>
 ```
 
 Add the public key to your **work** GitHub account under:
@@ -164,7 +175,7 @@ Uncomment and fill in the office machine block:
 
 # Disable GPG signing for personal repos on this machine.
 # GPG is typically not set up on corporate machines.
-# Work repos get SSH signing via ~/.gitconfig.work instead.
+# Work repos get SSH signing via their identity file instead.
 [commit]
     gpgsign = false
 
@@ -172,10 +183,18 @@ Uncomment and fill in the office machine block:
     gpgSign = false
 ```
 
-### 5B. Create ~/.gitconfig.work
+Then add the routing block for the work identity at the end of the file, after everything above — later matches win, so the identity file overrides these defaults:
+
+```ini
+[includeIf "gitdir:~/dev/"]
+    path = ~/.config/git/identities/<codename>.gitconfig
+```
+
+### 5B. Create the work identity file
 
 ```sh
-cp ~/dot/git/gitconfig.work.example ~/.gitconfig.work
+mkdir -p ~/.config/git/identities && chmod 700 ~/.config/git/identities
+cp ~/dot/git/identity.gitconfig.example ~/.config/git/identities/<codename>.gitconfig
 ```
 
 Fill in your work identity, signing key, and work credentials:
@@ -184,13 +203,19 @@ Fill in your work identity, signing key, and work credentials:
 [user]
     name  = Your Name
     email = you@work.com
-    signingkey = ~/.ssh/id_ed25519_job94776.pub
+    signingkey = ~/.ssh/id_ed25519_<codename>.pub
 
 [gpg]
     format = ssh
 
 [gpg "ssh"]
     allowedSignersFile = ~/.ssh/allowed_signers
+
+[commit]
+    gpgsign = true
+
+[tag]
+    gpgSign = true
 
 # Work account on a SAML-SSO org: use the gh CLI helper, NOT a Keychain PAT.
 # A Keychain PAT must be SSO-authorized or pushes 403 ("write access not granted"),
@@ -209,7 +234,7 @@ Fill in your work identity, signing key, and work credentials:
 Create the allowed signers file:
 
 ```sh
-echo "you@work.com namespaces=\"git\" $(cat ~/.ssh/id_ed25519_job94776.pub)" \
+echo "you@work.com namespaces=\"git\" $(cat ~/.ssh/id_ed25519_<codename>.pub)" \
   >> ~/.ssh/allowed_signers
 ```
 
@@ -229,7 +254,7 @@ gh auth login  --hostname github.com --git-protocol https   # choose the WORK ac
 gh auth refresh -h github.com -s repo                        # authorize the token for the work org's SSO
 ```
 
-`~/.gitconfig.work` points `~/dev/` repos at `!gh auth git-credential`, so work pushes
+The work identity file points `~/dev/` repos at `!gh auth git-credential`, so work pushes
 use this gh token automatically — no per-repo workaround. (Prefer a PAT for work too?
 Store it like the personal one above, then authorize it: token page → Configure SSO → Authorize.)
 
@@ -246,11 +271,13 @@ Corporate machines sometimes have a pre-existing `~/.gitconfig` that sets `pushI
 git config --list --show-origin | grep insteadof
 ```
 
-You should see only the `insteadOf` entry from your `~/.gitconfig.local`. If you see a `pushInsteadOf` from `~/.gitconfig`, remove it:
+You should see only the `insteadOf` entry from your `~/.gitconfig.local`. If you see a `pushInsteadOf` from `~/.gitconfig`, the corporate file was there first and `bootstrap.sh` skipped it. Move it aside and re-run bootstrap so `~/.gitconfig` becomes the dotfiles symlink:
 
 ```sh
-git config --global --unset 'url.git@github.com:.pushInsteadOf'
+mv ~/.gitconfig ~/.gitconfig.corporate && ~/dot/bootstrap.sh
 ```
+
+Once `~/.gitconfig` is the symlink, never run `git config --global` — it writes straight into this public repo. Write to `~/.gitconfig.local` or an identity file with `git config --file` instead. `gh auth setup-git` and `git lfs install` write global config too; run them with care and check `git -C ~/dot status` afterward.
 
 ### 8B. Clone repos
 
@@ -274,6 +301,65 @@ git remote set-url origin https://github.com/OWNER/REPO.git
 
 ---
 
+## Add another identity
+
+A client or a second job on the same machine. Nothing in this repo changes — every step writes to a private file. Example: a client on github.com with its own account, its repos kept in `~/dev/` alongside work.
+
+1. **Pick a codename** — for the key, the identity file, and the SSH alias. Never the client's name.
+
+2. **Signing key**, added to the client account under Settings → SSH and GPG keys → **Signing keys** (and Authentication keys on SSH machines):
+
+   ```sh
+   ssh-keygen -t ed25519 -C "<client-email>" -f ~/.ssh/id_ed25519_<codename>
+   ssh-add --apple-use-keychain ~/.ssh/id_ed25519_<codename>
+   echo "<client-email> namespaces=\"git\" $(cat ~/.ssh/id_ed25519_<codename>.pub)" >> ~/.ssh/allowed_signers
+   ```
+
+3. **Identity file** — copy the template and fill every `<…>`, using the Keychain PAT helper (option A):
+
+   ```sh
+   cp ~/dot/git/identity.gitconfig.example ~/.config/git/identities/<codename>.gitconfig
+   ```
+
+4. **Credential** — a personal access token (PAT) for the client account, stored against its username. If the client org enforces SAML SSO, authorize the token for it on GitHub.
+
+   ```sh
+   printf 'protocol=https\nhost=github.com\nusername=<client-github-username>\npassword=<CLIENT_PAT>\n' \
+     | git credential approve
+   ```
+
+5. **Route it** — append to the end of `~/.gitconfig.local`, below the `~/dev/` rule:
+
+   ```ini
+   [includeIf "hasconfig:remote.*.url:https://github.com/<client-org>/**"]
+       path = ~/.config/git/identities/<codename>.gitconfig
+   ```
+
+   The identity follows the remote, so a repo with no remote yet commits as work. Clone client repos, or add the remote before the first commit. If the client's code is on another host (GitHub Enterprise, GitLab, Azure DevOps), match that host's URL instead; credentials then separate by host on their own.
+
+6. **gh CLI, if needed.** `gh` serves its *active* account to git, so `gh auth switch` would change which account work pushes use. Give the client a separate gh config instead, scoped to its repos with mise:
+
+   ```sh
+   GH_CONFIG_DIR=~/.config/gh-<codename> gh auth login --hostname github.com --git-protocol https
+   ```
+
+   ```toml
+   # <repo>/mise.local.toml — gitignored globally
+   [env]
+   GH_CONFIG_DIR = "{{env.HOME}}/.config/gh-<codename>"
+   ```
+
+7. **SSH machines only** — add a `Host github-<codename>` block to `~/.ssh/config.local` (see `ssh/config.local.example`), and an SSH URL match (`git@github.com:<client-org>/**`) to the routing rule.
+
+8. **Verify** inside a client repo:
+
+   ```sh
+   git config --show-origin --get user.email      # the client email, from <codename>.gitconfig
+   git push --dry-run origin <branch>             # authenticates, updates nothing
+   ```
+
+---
+
 ## Troubleshooting
 
 **Push fails `403 Write access to repository not granted` (but clone/read works).**
@@ -289,7 +375,11 @@ cd <repo>
 git config --get-all credential.https://github.com.helper   # work repos (~/dev/) should list: !gh auth git-credential
 git config --get credential.https://github.com.username     # should be the work username under ~/dev/
 ```
-Repos only get the work identity when cloned **under `~/dev/`** (the `includeIf` trigger).
+See which identity a repo resolved to, and which file set it:
+```sh
+git config --show-origin --get user.email
+```
+Repos only get the work identity when cloned **under `~/dev/`**, and a client identity only once the repo has a remote in the client org (the `includeIf` triggers in `~/.gitconfig.local`).
 
 **Verify a push works without changing anything:**
 ```sh

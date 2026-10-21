@@ -26,7 +26,7 @@ Last updated: 2026-05-17
 
 - [x] Move personal SSH host (`github-brajeshwar`) to `~/.ssh/config.local`
 - [x] Add `Include ~/.ssh/config.local` to `ssh/config`
-- [x] Rename `github-wipro` → `github-job94776`, key to `id_ed25519_job94776`
+- [x] Rename the employer-named SSH host alias and key to a codename
 - [x] Create `ssh/config.local.example` documenting per-device key convention
 - [x] Add `[include]` and `[includeIf]` hooks to `git/gitconfig` for local identity
 - [x] Create `git/gitconfig.local.example`

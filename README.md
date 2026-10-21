@@ -37,8 +37,8 @@ These files are loaded automatically if they exist, but are never committed. The
 | File | Purpose |
 |---|---|
 | `~/.ssh/config.local` | Device-specific SSH identities (see `ssh/config.local.example`) |
-| `~/.gitconfig.local` | Machine-level overrides: transport, signing, credential helpers (see `git/gitconfig.local.example`) |
-| `~/.gitconfig.work` | Work-repo overrides: identity and credentials for work GitHub account (see `git/gitconfig.work.example`) |
+| `~/.gitconfig.local` | Machine-level overrides — transport, signing, credential helpers — and the identity routing table (see `git/gitconfig.local.example`) |
+| `~/.config/git/identities/<codename>.gitconfig` | One file per work, job, or client identity: name, email, signing key, credentials (see `git/identity.gitconfig.example`) |
 | `~/.zshrc.local` | Work env vars, aliases, tool completions |
 
 Copy the `.example` files as starting points. These files match the `*.local` pattern in `gitignore_global` and will never be accidentally committed.
@@ -63,28 +63,30 @@ ssh-add --apple-use-keychain ~/.ssh/id_ed25519_<Device>
 
 Then add the public key (`~/.ssh/id_ed25519_<Device>.pub`) to the relevant GitHub account under Settings → SSH keys.
 
-## Multiple GitHub identities
+## Multiple identities
 
-`ssh/config` defines Host aliases for different identities, each mapped to a specific SSH key. Use the alias instead of `github.com` when cloning to control which identity is used:
+The public repo names no identity except the personal default. Everything else — work, job, client — lives on the device, in three private places:
 
-```sh
-git clone git@github-brajeshwar:<user>/<repo>.git
-git clone git@github-arin:<user>/<repo>.git
-git clone git@github-kairo:<user>/<repo>.git
-git clone git@github-job94776:<user>/<repo>.git
-```
+| Private file | Holds |
+|---|---|
+| `~/.gitconfig.local` | The routing table: one `includeIf` per identity, deciding which repos get which identity |
+| `~/.config/git/identities/<codename>.gitconfig` | The identity itself: name, email, signing key, credential helper |
+| `~/.ssh/config.local` | `Host github-<codename>` aliases, on machines where SSH is allowed |
 
-Personal device identities (`github-brajeshwar`) go in `~/.ssh/config.local` since they reference a device-specific key. See `ssh/config.local.example`.
-
-Work identity and credentials are automatically applied to all repos under `~/dev/` via `~/.gitconfig.work`:
+Each identity gets a codename (for example `job12345` or a client nickname), so neither employer nor client appears in public configs. Routing is by folder, by remote org, or both:
 
 ```ini
-# Already wired in git/gitconfig:
+# ~/.gitconfig.local — keep this section last; later matches win
 [includeIf "gitdir:~/dev/"]
-  path = ~/.gitconfig.work
+    path = ~/.config/git/identities/<work-codename>.gitconfig
+
+[includeIf "hasconfig:remote.*.url:https://github.com/<client-org>/**"]
+    path = ~/.config/git/identities/<client-codename>.gitconfig
 ```
 
-Personal repos go anywhere outside `~/dev/` — they pick up the global identity. See `Device Setup.md` for the full setup guide, including HTTPS-only machines where SSH is blocked.
+Repos outside every rule pick up the personal identity from `git/gitconfig`. Adding an identity touches no file in this repo. See `Device Setup.md` for the full procedure, including HTTPS-only machines where SSH is blocked.
+
+Never run `git config --global`, `gh auth setup-git`, or anything else that writes global git config: `~/.gitconfig` is a symlink into this repo, so the change would be published on the next commit. Write to `~/.gitconfig.local` or an identity file with `git config --file` instead.
 
 ## Testing
 

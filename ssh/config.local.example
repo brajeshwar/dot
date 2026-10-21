@@ -14,6 +14,14 @@
 #   ssh-keygen -t ed25519 -C "your@email.com" -f ~/.ssh/id_ed25519_<Device>
 #   ssh-add --apple-use-keychain ~/.ssh/id_ed25519_<Device>
 #   # Then add the public key to GitHub → Settings → SSH keys
+#
+# Work, job, and client identities use a codename instead of the company name:
+#   key   id_ed25519_<codename>
+#   host  github-<codename>
+# The codename never appears in the public repo — only here and in
+# ~/.config/git/identities/<codename>.gitconfig.
+# On HTTPS-only machines these Host blocks are unused; the key still signs
+# commits through the identity's git config.
 
 # Personal GitHub identity for this device
 Host github-brajeshwar
@@ -21,3 +29,10 @@ Host github-brajeshwar
   User git
   IdentityFile ~/.ssh/id_ed25519_ONM_MBP2025  # replace with this device's key name
   IdentitiesOnly yes
+
+# One block per work, job, or client identity
+# Host github-<codename>
+#   HostName github.com
+#   User git
+#   IdentityFile ~/.ssh/id_ed25519_<codename>
+#   IdentitiesOnly yes

@@ -106,13 +106,14 @@ printf "\n--- git/gitconfig\n"
 # -----------------------------------------------------------------------
 
 assert_not_contains git/gitconfig "sign  ="            "gitconfig: no redundant sign alias"
+assert_not_contains git/gitconfig "includeIf"          "gitconfig: identity routing lives in ~/.gitconfig.local"
+assert_contains     git/gitconfig "~/.gitconfig.local" "gitconfig: include ~/.gitconfig.local hook present"
 
 # -----------------------------------------------------------------------
 printf "\n--- ssh/config\n"
 # -----------------------------------------------------------------------
 
-assert_contains     ssh/config "github-job94776"       "ssh/config: job94776 host present"
-assert_contains     ssh/config "id_ed25519_job94776"   "ssh/config: job94776 key uses obfuscated name"
+assert_not_contains ssh/config "Host github-"          "ssh/config: identity host aliases live in config.local"
 assert_not_contains ssh/config "wipro"                 "ssh/config: no employer name in public config"
 assert_contains     ssh/config "config.local"          "ssh/config: Include config.local hook present"
 

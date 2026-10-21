@@ -26,7 +26,7 @@
 # 2. Use raw osxkeychain with PATs — bypasses gh auth git-credential,
 #    which only knows about one account.
 #    username here is the DEFAULT for personal repos (outside ~/dev/).
-#    Work repos override this via ~/.gitconfig.work (see that example).
+#    Work and client repos override this via their identity files (section 5).
 #
 # [credential "https://github.com"]
 #     helper =
@@ -49,5 +49,26 @@
 #    macOS Keychain stores two separate entries (same host, different accounts).
 #    The username hint in [credential] sections selects the right one per context.
 #
-# 4. Work-repo identity and work credential → see git/gitconfig.work.example.
-#    That file is auto-applied to ~/dev/ repos via [includeIf] in gitconfig.
+# 4. Work and client identities and their credentials → see
+#    git/identity.gitconfig.example. Routed by section 5 below.
+
+# ─── 5. IDENTITY ROUTING (every machine) ────────────────────────────────────
+# The public gitconfig names no identities; this table does. One file per
+# identity in ~/.config/git/identities/. Keep this section LAST in the file:
+# later matches win, so identity files override the defaults above.
+#
+# By folder — every repo under ~/dev/ gets the work identity:
+#
+# [includeIf "gitdir:~/dev/"]
+#     path = ~/.config/git/identities/<work-codename>.gitconfig
+#
+# By remote org — layered after the folder rule, so a client repo can live in
+# ~/dev/ too. Needs git 2.36+. A repo with no remote yet falls back to the rule
+# above: clone it, or add the remote before the first commit. On SSH machines,
+# add a second block matching git@github.com:<client-org>/** as well.
+#
+# [includeIf "hasconfig:remote.*.url:https://github.com/<client-org>/**"]
+#     path = ~/.config/git/identities/<client-codename>.gitconfig
+#
+# Check which identity a repo resolves to, and which file set it:
+#    git config --show-origin --get user.email

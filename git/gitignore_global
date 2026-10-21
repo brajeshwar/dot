@@ -38,6 +38,8 @@ Thumbs.db
 #########################################
 *.local
 .gitconfig.local
+mise.local.toml
+.mise.local.toml
 
 # SSH keys — belt-and-braces #
 ###############################

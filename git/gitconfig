@@ -70,13 +70,9 @@
 [gpg "ssh"]
     allowedSignersFile = ~/.config/git/allowed_signers
 
-# Machine-level overrides: SSH vs HTTPS, signing key, credential helpers.
+# Machine-level overrides: SSH vs HTTPS, signing key, credential helpers —
+# and the identity routing table, so no identity is ever named here.
 # Copy git/gitconfig.local.example → ~/.gitconfig.local (never committed).
+# Never run `git config --global`: ~/.gitconfig is a symlink to this file.
 [include]
     path = ~/.gitconfig.local
-
-# Work-repo overrides: identity and credentials for work GitHub account.
-# Copy git/gitconfig.work.example → ~/.gitconfig.work (never committed).
-# Applied to any repo cloned under ~/dev/.
-[includeIf "gitdir:~/dev/"]
-    path = ~/.gitconfig.work

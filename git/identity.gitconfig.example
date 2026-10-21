@@ -1,0 +1,60 @@
+# git/identity.gitconfig.example
+#
+# One file per identity — work, job, or client. Copy to
+# ~/.config/git/identities/<codename>.gitconfig (never committed), fill every
+# <…>, then add its routing block to ~/.gitconfig.local
+# (see git/gitconfig.local.example, section 5).
+#
+# Codenames keep employers and clients out of public configs: name the file,
+# the key, and any SSH host alias after the codename, never the company.
+#
+# Keep each file self-contained. A repo can match more than one routing rule
+# (a client repo under ~/dev/ matches the work rule too); the later include wins
+# key by key, so anything this file leaves unset leaks in from the other one.
+
+[user]
+    name  = Your Name
+    email = <identity-email>
+    signingkey = ~/.ssh/id_ed25519_<codename>.pub
+
+[gpg]
+    format = ssh
+
+[gpg "ssh"]
+    allowedSignersFile = ~/.ssh/allowed_signers
+
+[commit]
+    gpgsign = true
+
+[tag]
+    gpgSign = true
+
+# Credentials. Pick ONE helper per identity; `helper =` first clears inherited ones.
+#
+# A) Keychain PAT keyed on the username — the default for any extra github.com
+#    account. Independent of which gh account is active.
+#    Store it once: printf 'protocol=https\nhost=github.com\nusername=<github-username>\npassword=<PAT>\n' | git credential approve
+#
+# B) gh CLI — for the ONE identity gh keeps active. gh serves the active
+#    account's token, so `gh auth switch` silently changes which account pushes.
+#    Prereq: gh auth login as that account (gh handles SAML SSO authorization).
+#    If git can't find gh on PATH, use the absolute path (Apple Silicon:
+#    /opt/homebrew/bin/gh ; Intel: /usr/local/bin/gh).
+#
+# SAML SSO orgs: a Keychain PAT must also be SSO-authorized for the org
+# (token page → Configure SSO → Authorize), or pushes fail with
+# "Write access to repository not granted" (403) while clones work.
+[credential "https://github.com"]
+    helper =
+    helper = osxkeychain
+    # helper = !gh auth git-credential     (option B instead)
+    username = <github-username>
+
+[credential "https://gist.github.com"]
+    helper =
+    helper = osxkeychain
+    username = <github-username>
+
+# GitHub Enterprise Server or another host: replace "https://github.com" above
+# with that host (e.g. https://github.corp.com). Credentials then separate by
+# host, and option A or B both work without username juggling.
