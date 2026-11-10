@@ -1,0 +1,89 @@
+tap "anomalyco/tap"
+tap "databricks/tap", trusted: true
+tap "steipete/tap"
+# Cloudflare Tunnel client (formerly Argo Tunnel)
+brew "cloudflared"
+# Container runtimes on MacOS (and Linux) with minimal setup
+brew "colima"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
+# Modern diagram scripting language that turns text to diagrams
+brew "d2"
+# Pack, ship and run any application as a lightweight container
+brew "docker"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# Collection of GNU find, xargs, and locate
+brew "findutils"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
+# Interact with Google Gemini AI models from the command-line
+brew "gemini-cli"
+# GitHub command-line tool
+brew "gh"
+# Interpreter for PostScript and PDF
+brew "ghostscript"
+# Distributed revision control system
+brew "git"
+# Git extension for versioning large files
+brew "git-lfs"
+# GNU Privacy Guard (OpenPGP)
+brew "gnupg"
+# GNU grep, egrep and fgrep
+brew "grep"
+# Tools and libraries to manipulate images in select formats
+brew "imagemagick"
+# Feature-rich interactive Jira CLI
+brew "jira-cli"
+# Git-compatible distributed version control system
+brew "jj"
+# Mac App Store command-line interface
+brew "mas"
+# Deep clean and optimize your Mac
+brew "mole"
+# Collection of tools that nobody wrote when UNIX was young
+brew "moreutils"
+# Development kit for the Java programming language
+brew "openjdk@17"
+# Swiss-army knife of markup format conversion
+brew "pandoc"
+# Execute binaries from Python packages in isolated environments
+brew "pipx"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
+# Object-relational database system
+brew "postgresql@16", restart_service: :changed, link: true
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
+# Ruby version manager
+brew "rbenv"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Rust toolchain installer
+brew "rustup"
+# Add a public key to a remote machine's authorized_keys file
+brew "ssh-copy-id"
+# Easiest, most secure way to use WireGuard and 2FA
+brew "tailscale"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Vi 'workalike' with many additional features
+brew "vim"
+# Internet file retriever
+brew "wget"
+# Programming language designed for robustness, optimality, and clarity
+brew "zig@0.15", link: true
+# Command-line interface for the Databricks platform
+brew "databricks/tap/databricks"
+# Microsoft Azure CLI 2.0
+cask "azure-cli"
+cask "codexbar"
+# Utility to hide menu bar items
+cask "hiddenbar"
+mas "AdGuard Mini", id: 1440147259
+mas "iA Writer", id: 775737590
+mas "The Clock", id: 488764545
+npm "browser-sync"
+npm "netlify-cli"
+npm "ovellum"
+npm "pnpm"
