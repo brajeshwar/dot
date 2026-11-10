@@ -65,12 +65,10 @@ fpath=(~/.grok/completions/zsh $fpath)
 autoload -Uz compinit && compinit -C
 # <<< grok installer <<<
 
-# >>> open-knowledge cli >>>
-# ! Contents within this block are managed by Open Knowledge. Do not edit.
-# ! Delete this whole block to opt out — Open Knowledge will not re-add it.
-[ -f "$HOME/.ok/env.sh" ] && . "$HOME/.ok/env.sh"
-# <<< open-knowledge cli <<<
 
 
 # Hermes Agent — ensure ~/.local/bin is on PATH
 export PATH="$HOME/.local/bin:$PATH"
+
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"
