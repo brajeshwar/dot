@@ -1,6 +1,19 @@
 # TODO
 
-Last updated: 2026-05-17
+Last updated: 2026-11-10
+
+---
+
+## Later
+
+- [ ] Move SSH keys off disk to hardware-bound keys, at the next key rotation or new Mac
+  - Reference: [I deleted all my SSH keys](https://blog.infected.systems/posts/2026-11-03-i-deleted-all-my-ssh-keys/)
+  - Start with a Secure Enclave key (Touch ID) for the personal identity, for auth only
+  - Keep commit signing as is until the per-commit Touch ID prompts are tested, including during a rebase
+  - Check clamshell mode: Touch ID keys fail with the lid closed
+  - Register a second key per identity, since a dead machine means a dead key
+  - Changes needed: `IdentityFile` handles in `~/.ssh/config.local`, `SSH_SK_PROVIDER` in `zsh/zshrc`, and a section in `Device Setup.md`
+  - Retire the legacy on-disk keys once the new ones are proven
 
 ---
 
