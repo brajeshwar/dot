@@ -1,6 +1,8 @@
 tap "anomalyco/tap"
 tap "databricks/tap", trusted: true
 tap "steipete/tap"
+# Official Amazon AWS command-line interface
+brew "awscli"
 # Cloudflare Tunnel client (formerly Argo Tunnel)
 brew "cloudflared"
 # Container runtimes on MacOS (and Linux) with minimal setup
