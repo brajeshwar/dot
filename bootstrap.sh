@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# Edited: Mar 15, 2026
+# Edited: Nov 11, 2026
 set -eu
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -24,6 +24,7 @@ mkdir -p "$HOME/.config/ghostty"
 mkdir -p "$HOME/.config/mise"
 
 link "env/paths.sh"          "$HOME/.paths"
+link "env/hushlogin"         "$HOME/.hushlogin"
 link "zsh/zprofile"          "$HOME/.zprofile"
 link "zsh/zshenv"            "$HOME/.zshenv"
 link "zsh/zshrc"             "$HOME/.zshrc"
