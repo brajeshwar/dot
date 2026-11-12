@@ -24,7 +24,7 @@ Creates all required symlinks in `$HOME`. Safe to re-run — existing non-symlin
 
 **`.zshenv`** sets the minimal PATH needed everywhere: `~/.local/bin` (pipx tools) and `~/_root/tools` (personal scripts). Nothing else. No Homebrew, no runtimes, no shell behavior. This is why vendor tools don't need to touch your shell config — the PATH is already correct.
 
-**`.paths`** (symlinked from `env/paths.sh`) adds login-shell runtimes: bun, deno, Python user base, LM Studio, and any other vendor tooling. POSIX-safe, no shell-specific logic. `~/.local/bin` and `~/_root/tools` are intentionally absent here — they live in `.zshenv` to be available everywhere, not just login shells.
+**`.paths`** (symlinked from `env/paths.sh`) adds login-shell runtimes: bun, deno, Python user base, LM Studio, and any other vendor tooling. POSIX-safe, no shell-specific logic. `~/.local/bin` and `~/_root/tools` are intentionally absent here — they live in `.zshenv` to be available everywhere, not just login shells. Obsidian is also absent on purpose: its CLI is installed from Obsidian itself (Settings → General → Command line interface), which symlinks `/usr/local/bin/obsidian` to the app's `obsidian-cli`. Putting the app's `MacOS` folder on PATH shadows that symlink with the Electron binary of the same name.
 
 **`.zshrc`** contains no PATH logic. Prompt, shell options, history, completions only. Sources `~/.zshrc.local` at the end if it exists.
 

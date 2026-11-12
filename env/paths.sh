@@ -2,7 +2,7 @@
 # Shared runtime PATH (POSIX-safe)
 # Sourced by .zprofile and .bash_profile for login shells.
 # ~/.local/bin and ~/_root/tools are set in .zshenv (all shells).
-# Edited: Mar 15, 2026
+# Edited: Nov 12, 2026
 # ---------------------------------
 
 # bun
@@ -26,9 +26,6 @@ PATH="$PYTHON_USER_BASE/bin:$PATH"
 
 # LM Studio CLI
 PATH="$HOME/.lmstudio/bin:$PATH"
-
-# Obsidian (CLI access to app binary)
-PATH="/Applications/Obsidian.app/Contents/MacOS:$PATH"
 
 # mise shims — non-interactive/GUI contexts (Zed terminal, IDEs, scripts)
 # that never source zshrc's `mise activate` hook still get pinned versions.

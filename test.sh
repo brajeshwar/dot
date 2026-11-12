@@ -60,7 +60,9 @@ printf "\n--- env/paths.sh: correct content\n"
 
 assert_file         env/paths.sh                      "env/paths.sh exists"
 assert_contains     env/paths.sh "lmstudio"           "paths.sh: LM Studio PATH present"
-assert_contains     env/paths.sh "Obsidian.app"       "paths.sh: Obsidian PATH present"
+# Obsidian installs its CLI itself (/usr/local/bin/obsidian → obsidian-cli); putting
+# the app's MacOS folder on PATH shadows that symlink with the Electron binary.
+assert_not_contains env/paths.sh "Obsidian.app"       "paths.sh: no Obsidian PATH"
 assert_not_contains env/paths.sh "PIPX_BIN_DIR"       "paths.sh: no duplicate PIPX_BIN_DIR"
 # Check that _root/tools is not being set as a PATH entry (comment references are fine)
 assert_not_contains env/paths.sh 'PATH="$HOME/_root'  "paths.sh: no duplicate _root/tools PATH entry"
