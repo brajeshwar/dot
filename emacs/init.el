@@ -16,7 +16,7 @@
 ;; Speed budget: every external package is listed here, loads lazily (on a
 ;; key, a mode, or a file type), and never at startup. Plain Emacs Lisp, no
 ;; `use-package': it and package.el cost ~160ms at startup on their own.
-(defvar oinam/packages '(treemacs markdown-mode olivetti)
+(defvar oinam/packages '(markdown-mode olivetti)
   "External packages. Each machine installs missing ones on first launch.")
 
 ;; package.el only loads when something on the list is missing.
@@ -71,29 +71,84 @@
 
 ;;; Sidebar
 
-;; A Sublime-style folder tree on the left with ~/dev in it, so every project
-;; is one click away. Toggle it with ⌘K ⌘B, as in Sublime; that takes ⌘K away
-;; from its default (close buffer), which C-x k still does.
-;;
-;; Treemacs brings 10 dependencies and ~200ms, so it loads on the first ⌘K ⌘B,
-;; not at startup.
-(setq treemacs-width 32
-      ;; Plain text markers instead of picture icons.
-      treemacs-no-png-images t)
+;; Built in, no packages: a dired folder list of ~/dev pinned on the left.
+;; Toggle it with ⌘K ⌘B, as in Sublime; that takes ⌘K away from its default
+;; (close buffer), which C-x k still does. In the list, RET or a click opens a
+;; folder in place and a file in the editor; ^ goes up a folder.
+(defvar-keymap oinam/sidebar-mode-map
+  "RET" #'oinam/sidebar-open
+  "<mouse-2>" #'oinam/sidebar-click
+  "^" #'oinam/sidebar-up)
 
-(with-eval-after-load 'treemacs
-  (treemacs-follow-mode 1)
-  (treemacs-filewatch-mode 1))
+(define-minor-mode oinam/sidebar-mode
+  "Keys for the sidebar's dired buffers."
+  :keymap oinam/sidebar-mode-map)
+
+;; Folders first, using Emacs's own directory listing rather than macOS ls.
+(setq ls-lisp-use-insert-directory-program nil
+      ls-lisp-dirs-first t
+      dired-omit-files "\\`[.]\\'\\|\\`[.]\\(git\\|DS_Store\\)\\'")
+
+(defun oinam/sidebar-show (dir)
+  "Show DIR in the sidebar window, replacing what was there."
+  (let ((old (current-buffer))
+        (buf (dired-noselect dir)))
+    (with-current-buffer buf
+      (dired-hide-details-mode 1)
+      (dired-omit-mode 1)
+      (oinam/sidebar-mode 1))
+    (set-window-buffer nil buf)
+    (unless (or (eq old buf) (get-buffer-window old t))
+      (kill-buffer old))))
+
+(defun oinam/sidebar-open ()
+  "Open the folder at point in the sidebar, or the file in the editor."
+  (interactive)
+  (let ((file (dired-get-file-for-visit)))
+    (if (file-directory-p file)
+        (oinam/sidebar-show file)
+      (select-window (get-mru-window nil nil t))
+      (find-file file))))
+
+(defun oinam/sidebar-click (event)
+  "Open what was clicked, as RET does."
+  (interactive "e")
+  (mouse-set-point event)
+  (oinam/sidebar-open))
+
+(defun oinam/sidebar-up ()
+  "Show the parent folder in the sidebar."
+  (interactive)
+  (oinam/sidebar-show (file-name-directory (directory-file-name default-directory))))
 
 (defun oinam/sidebar ()
-  "Toggle the sidebar, adding ~/dev to it the first time."
+  "Toggle the ~/dev folder list on the left."
   (interactive)
-  (require 'treemacs)
-  (treemacs-do-add-project-to-workspace (expand-file-name "~/dev") "dev")
-  (treemacs))
+  (if-let* ((win (window-with-parameter 'window-side 'left)))
+      (delete-window win)
+    (require 'ls-lisp)
+    (require 'dired-x)
+    (let ((buf (dired-noselect "~/dev/")))
+      (select-window
+       (display-buffer-in-side-window
+        buf '((side . left) (window-width . 32)
+              (window-parameters . ((no-delete-other-windows . t))))))
+      (oinam/sidebar-show "~/dev/"))))
 
 (keymap-global-unset "s-k")
 (keymap-global-set "s-k s-b" #'oinam/sidebar)
+
+;;; Finding files
+
+;; ⌘P finds a file in the current project by typing part of its name, like
+;; Sublime's Goto Anything; C-x p p switches project. Both are built in, and a
+;; project is any folder under git. The vertical list narrows as you type.
+(fido-vertical-mode 1)
+(keymap-global-set "s-p" #'project-find-file)
+
+;; Make every project in ~/dev known the first time a project command runs.
+(with-eval-after-load 'project
+  (project-remember-projects-under "~/dev"))
 
 ;;; Markdown
 
