@@ -54,11 +54,11 @@
 (pixel-scroll-precision-mode 1)
 (column-number-mode 1)
 
-;; Theme. Try others live with M-x load-theme (built-in ones include
-;; modus-vivendi and modus-operandi); to keep one, change the name here.
-(use-package nord-theme
-  :config
-  (load-theme 'nord t))
+;; Theme: built-in only, no packages. Dark with a cool blue tint, the closest
+;; native match to Nord. Try others live with M-x load-theme (modus-vivendi,
+;; modus-operandi for light, misterioso, wombat, ...); to keep one, change the
+;; name here.
+(load-theme 'modus-vivendi-tinted t)
 
 ;;; Sidebar
 
