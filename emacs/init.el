@@ -54,6 +54,12 @@
 (pixel-scroll-precision-mode 1)
 (column-number-mode 1)
 
+;; Theme. Try others live with M-x load-theme (built-in ones include
+;; modus-vivendi and modus-operandi); to keep one, change the name here.
+(use-package nord-theme
+  :config
+  (load-theme 'nord t))
+
 ;;; Sidebar
 
 ;; A Sublime-style folder tree on the left, opened on ~/dev at startup so every
