@@ -54,6 +54,11 @@ add-zsh-hook chpwd _set_window_title
 # Undocumented env var — remove if it stops working in a future release.
 export CLAUDE_CODE_DISABLE_TERMINAL_TITLE=1
 
+# Use the terminal's own cursor (Ghostty's blinking bar) in Claude Code's
+# input instead of its drawn block. Documented as an accessibility setting
+# for screen magnifiers; no dedicated cursor-shape setting exists yet.
+export CLAUDE_CODE_ACCESSIBILITY=1
+
 # ---------------------------------
 # Local overrides (machine/work-specific — not committed)
 # ---------------------------------
