@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# Edited: Nov 11, 2026
+# Edited: Nov 14, 2026
 set -eu
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -22,6 +22,7 @@ echo "Bootstrapping dotfiles..."
 mkdir -p "$HOME/.ssh"
 mkdir -p "$HOME/.config/ghostty"
 mkdir -p "$HOME/.config/mise"
+mkdir -p "$HOME/.config/emacs"
 
 link "env/paths.sh"          "$HOME/.paths"
 link "env/hushlogin"         "$HOME/.hushlogin"
@@ -35,6 +36,8 @@ link "git/gitignore_global"  "$HOME/.gitignore_global"
 link "ssh/config"            "$HOME/.ssh/config"
 link "ghostty/config"        "$HOME/.config/ghostty/config"
 link "mise/config.toml"      "$HOME/.config/mise/config.toml"
+link "emacs/early-init.el"   "$HOME/.config/emacs/early-init.el"
+link "emacs/init.el"         "$HOME/.config/emacs/init.el"
 
 echo "Done."
 echo "Restart your shell or run: exec zsh -l"

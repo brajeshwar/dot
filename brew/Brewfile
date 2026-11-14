@@ -80,6 +80,8 @@ brew "databricks/tap/databricks"
 # Microsoft Azure CLI 2.0
 cask "azure-cli"
 cask "codexbar"
+# GNU Emacs text editor
+cask "emacs-app"
 # Utility to hide menu bar items
 cask "hiddenbar"
 mas "AdGuard Mini", id: 1440147259
