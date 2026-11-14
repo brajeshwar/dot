@@ -13,12 +13,20 @@
 
 ;;; Packages
 
-;; Declare every package with `use-package'; each machine installs its own
-;; copy on first launch.
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(require 'use-package)
-(setq use-package-always-ensure t)
+;; Speed budget: every external package is listed here, loads lazily (on a
+;; key, a mode, or a file type), and never at startup. Plain Emacs Lisp, no
+;; `use-package': it and package.el cost ~160ms at startup on their own.
+(defvar oinam/packages '(treemacs markdown-mode olivetti)
+  "External packages. Each machine installs missing ones on first launch.")
+
+;; package.el only loads when something on the list is missing.
+(let ((missing (seq-remove (lambda (p) (locate-library (symbol-name p)))
+                           oinam/packages)))
+  (when missing
+    (require 'package)
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+    (package-refresh-contents)
+    (mapc #'package-install missing)))
 
 ;;; Files
 
@@ -37,6 +45,7 @@
 (setq create-lockfiles nil)
 
 ;; Remember recent files, minibuffer history, and the cursor position per file.
+(setq recentf-auto-cleanup 'never)
 (recentf-mode 1)
 (savehist-mode 1)
 (save-place-mode 1)
@@ -62,28 +71,29 @@
 
 ;;; Sidebar
 
-;; A Sublime-style folder tree on the left, opened on ~/dev at startup so every
-;; project is one click away. Toggle it with ⌘K ⌘B, as in Sublime; that takes
-;; ⌘K away from its default (close buffer), which C-x k still does.
-(keymap-global-unset "s-k")
+;; A Sublime-style folder tree on the left with ~/dev in it, so every project
+;; is one click away. Toggle it with ⌘K ⌘B, as in Sublime; that takes ⌘K away
+;; from its default (close buffer), which C-x k still does.
+;;
+;; Treemacs brings 10 dependencies and ~200ms, so it loads on the first ⌘K ⌘B,
+;; not at startup.
+(setq treemacs-width 32
+      ;; Plain text markers instead of picture icons.
+      treemacs-no-png-images t)
 
-(use-package treemacs
-  :bind ("s-k s-b" . treemacs)
-  :custom
-  (treemacs-width 32)
-  ;; Plain text markers instead of picture icons.
-  (treemacs-no-png-images t)
-  :config
+(with-eval-after-load 'treemacs
   (treemacs-follow-mode 1)
   (treemacs-filewatch-mode 1))
 
-(defun oinam/sidebar-on-dev ()
-  "Show the sidebar with ~/dev in it, leaving the cursor in the editor."
+(defun oinam/sidebar ()
+  "Toggle the sidebar, adding ~/dev to it the first time."
+  (interactive)
   (require 'treemacs)
   (treemacs-do-add-project-to-workspace (expand-file-name "~/dev") "dev")
-  (save-selected-window (treemacs-select-window)))
+  (treemacs))
 
-(add-hook 'emacs-startup-hook #'oinam/sidebar-on-dev)
+(keymap-global-unset "s-k")
+(keymap-global-set "s-k s-b" #'oinam/sidebar)
 
 ;;; Markdown
 
@@ -92,10 +102,9 @@
 ;; check, and saving when Emacs loses focus.
 (set-face-attribute 'default nil :family "JetBrains Mono" :height 170)
 
-;; Centers the text in a fixed-width column, like Sublime's draw_centered.
-(use-package olivetti
-  :custom
-  (olivetti-body-width 80))
+;; olivetti centers the text in a fixed-width column, like Sublime's
+;; draw_centered.
+(setq olivetti-body-width 80)
 
 (defun oinam/markdown-writing ()
   "Turn a Markdown buffer into a prose view."
@@ -110,14 +119,12 @@
   (when (or (executable-find "aspell") (executable-find "hunspell"))
     (flyspell-mode 1)))
 
-(use-package markdown-mode
-  ;; Entries are pushed in turn, so the README rule must come last to win.
-  :mode (("\\.\\(md\\|markdown\\)\\'" . markdown-mode)
-         ("README\\.md\\'" . gfm-mode))
-  :hook ((markdown-mode . oinam/markdown-writing))
-  :custom
-  (markdown-fontify-code-blocks-natively t)
-  (markdown-asymmetric-header t))
+;; markdown-mode's autoloads claim .md and .markdown; READMEs get GitHub's
+;; dialect.
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+(add-hook 'markdown-mode-hook #'oinam/markdown-writing)
+(setq markdown-fontify-code-blocks-natively t
+      markdown-asymmetric-header t)
 
 (defun oinam/save-markdown-on-blur ()
   "Save edited Markdown files when Emacs loses focus, like Sublime."
