@@ -190,4 +190,49 @@
 
 (add-function :after after-focus-change-function #'oinam/save-markdown-on-blur)
 
+;;; Light pages
+
+;; Markdown and .txt files read on a light page, like iA Writer and the Sublime
+;; setup, while code stays dark. Themes are frame-wide, so this repaints only
+;; those buffers' faces. Colors match MarkdownEditor.sublime-color-scheme in
+;; ~/dev/sublime-user.
+(defvar oinam/page-faces
+  `((default :foreground "#1E1E1E" :background "#F6F6F6")
+    (fringe :background "#F6F6F6")
+    (region :background "#D6EAF8")
+    (fill-column-indicator :foreground "#E0E0E0" :background "#F6F6F6")
+    ;; Markdown syntax fades to grey; words stay dark.
+    (markdown-markup-face :foreground "#B4B4B4")
+    (markdown-header-delimiter-face :foreground "#B4B4B4")
+    (markdown-list-face :foreground "#B4B4B4")
+    (markdown-language-keyword-face :foreground "#B4B4B4")
+    (markdown-reference-face :foreground "#B4B4B4")
+    ;; Headings stay text-colored and only get bold.
+    ,@(mapcar (lambda (n)
+                `(,(intern (format "markdown-header-face-%d" n))
+                  :foreground "#1E1E1E" :weight bold))
+              (number-sequence 1 6))
+    (markdown-bold-face :foreground "#1E1E1E" :weight bold)
+    (markdown-italic-face :foreground "#1E1E1E" :slant italic)
+    (markdown-blockquote-face :foreground "#5A5A5A")
+    (markdown-link-face :foreground "#5B9BD5")
+    (markdown-url-face :foreground "#5B9BD5")
+    (markdown-plain-url-face :foreground "#5B9BD5")
+    (markdown-inline-code-face :foreground "#1E1E1E" :background "#EBEBEB")
+    (markdown-code-face :background "#EBEBEB")
+    (markdown-pre-face :foreground "#1E1E1E"))
+  "Faces repainted on a light page.")
+
+(defun oinam/light-page ()
+  "Repaint this buffer as a light page."
+  (dolist (face oinam/page-faces)
+    (face-remap-add-relative (car face) (cdr face))))
+
+(add-hook 'markdown-mode-hook #'oinam/light-page)
+(add-hook 'text-mode-hook
+          (lambda ()
+            (when (and (eq major-mode 'text-mode) buffer-file-name
+                       (string-suffix-p ".txt" buffer-file-name t))
+              (oinam/light-page))))
+
 ;;; init.el ends here
