@@ -59,6 +59,8 @@
 ;;; Display
 
 (setq inhibit-startup-screen t)
+;; A thin bar cursor, like Sublime's caret.
+(setq-default cursor-type '(bar . 2))
 (setq ring-bell-function #'ignore)
 (pixel-scroll-precision-mode 1)
 (column-number-mode 1)
