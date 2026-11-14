@@ -15,6 +15,8 @@
 
 ;; Declare every package with `use-package'; each machine installs its own
 ;; copy on first launch.
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (require 'use-package)
 (setq use-package-always-ensure t)
 
@@ -51,5 +53,30 @@
 (setq ring-bell-function #'ignore)
 (pixel-scroll-precision-mode 1)
 (column-number-mode 1)
+
+;;; Sidebar
+
+;; A Sublime-style folder tree on the left, opened on ~/dev at startup so every
+;; project is one click away. Toggle it with ⌘K ⌘B, as in Sublime; that takes
+;; ⌘K away from its default (close buffer), which C-x k still does.
+(keymap-global-unset "s-k")
+
+(use-package treemacs
+  :bind ("s-k s-b" . treemacs)
+  :custom
+  (treemacs-width 32)
+  ;; Plain text markers instead of picture icons.
+  (treemacs-no-png-images t)
+  :config
+  (treemacs-follow-mode 1)
+  (treemacs-filewatch-mode 1))
+
+(defun oinam/sidebar-on-dev ()
+  "Show the sidebar with ~/dev in it, leaving the cursor in the editor."
+  (require 'treemacs)
+  (treemacs-do-add-project-to-workspace (expand-file-name "~/dev") "dev")
+  (save-selected-window (treemacs-select-window)))
+
+(add-hook 'emacs-startup-hook #'oinam/sidebar-on-dev)
 
 ;;; init.el ends here
