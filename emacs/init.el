@@ -85,4 +85,47 @@
 
 (add-hook 'emacs-startup-hook #'oinam/sidebar-on-dev)
 
+;;; Markdown
+
+;; A writing mode modeled on the Sublime setup in ~/dev/sublime-user: same
+;; font, a centered 80-character column, a ruler at 79, roomier lines, spell
+;; check, and saving when Emacs loses focus.
+(set-face-attribute 'default nil :family "JetBrains Mono" :height 170)
+
+;; Centers the text in a fixed-width column, like Sublime's draw_centered.
+(use-package olivetti
+  :custom
+  (olivetti-body-width 80))
+
+(defun oinam/markdown-writing ()
+  "Turn a Markdown buffer into a prose view."
+  (visual-line-mode 1)
+  (olivetti-mode 1)
+  (setq-local fill-column 80
+              tab-width 4
+              line-spacing 0.25
+              display-fill-column-indicator-column 79)
+  (display-fill-column-indicator-mode 1)
+  ;; Needs a spell checker on the machine: brew install aspell.
+  (when (or (executable-find "aspell") (executable-find "hunspell"))
+    (flyspell-mode 1)))
+
+(use-package markdown-mode
+  ;; Entries are pushed in turn, so the README rule must come last to win.
+  :mode (("\\.\\(md\\|markdown\\)\\'" . markdown-mode)
+         ("README\\.md\\'" . gfm-mode))
+  :hook ((markdown-mode . oinam/markdown-writing))
+  :custom
+  (markdown-fontify-code-blocks-natively t)
+  (markdown-asymmetric-header t))
+
+(defun oinam/save-markdown-on-blur ()
+  "Save edited Markdown files when Emacs loses focus, like Sublime."
+  (unless (frame-focus-state)
+    (save-some-buffers t (lambda ()
+                           (and buffer-file-name
+                                (derived-mode-p 'markdown-mode))))))
+
+(add-function :after after-focus-change-function #'oinam/save-markdown-on-blur)
+
 ;;; init.el ends here
